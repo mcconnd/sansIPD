@@ -327,11 +327,12 @@ is_surv_viz_gg <- function(is_surv, times=tseq2,
                    ) #%>%
      # pivot_longer(cols=2:4)
     
-    g<-ggplot(data=df,aes(x=alpha,y=ESS))+
-      geom_line()+
-      geom_vline(xintercept=is_surv$alpha_star)+
-      #facet_wrap(name~.,ncol=1,scales="free_y")+
-      labs(title=paste0("Effective sample size - ",distributions[dist]))
+    g<-ggplot(data=df,aes(x=alpha,y=ESS))
+    + geom_line()
+    + geom_vline(xintercept=is_surv$alpha_star)
+    + labs(title=paste0("Effective sample size - ",distributions[dist]))
+    # + facet_wrap(name~.,ncol=1,scales="free_y")
+      
     
     print(g)
     
@@ -347,10 +348,10 @@ is_surv_viz_gg <- function(is_surv, times=tseq2,
   if(ind[2]) {
     
     par_old<-data.frame(par_old)
-    par_old["Method"]<-"MLE"
+    par_old["Method"]<-"Trial data only"
     
     par_new<-data.frame(is_surv$par_new)
-    par_new["Method"]<-"IS"
+    par_new["Method"]<-"Trial data with external information"
     
     df<-bind_rows(par_old,par_new)
     
@@ -375,8 +376,8 @@ is_surv_viz_gg <- function(is_surv, times=tseq2,
     oldcurve<-get_sims(dist=dist,coeff = is_surv$orig$coefficients, cov = is_surv$orig$cov, tst=is_surv$ex_info$tstar, times=times, tmax=max(times))$survsummary
     newcurve<-get_sims(dist=dist,coeff = is_surv$post_mean, cov = is_surv$post_cov, tst=is_surv$ex_info$tstar, times=times, tmax=max(times))$survsummary
     
-    oldcurve["Method"]="MLE"
-    newcurve["Method"]="IS"
+    oldcurve["Method"]="Trial data only"
+    newcurve["Method"]="Trial data with external information"
     plotcurves<-bind_rows(oldcurve,newcurve)
     
     # Lower and upper limits to plot prior

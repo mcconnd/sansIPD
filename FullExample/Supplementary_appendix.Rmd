@@ -50,8 +50,8 @@ The tables and figures in this section show survival curve parameter estimates, 
 ```{r captions}
 
 captions1<-c(paste0("Effective sample size (ESS), corresponding to 5000 (weighted) parameter samples, plotted as a function of the tempering parameter alpha, for the ",distributions," distribution. The vertical line shows the optimal value of alpha identified by the algorithm."))
-captions2<-c(paste0("Survival curve parameter distributions and covariance estimates obtained using trial data only (MLE) and combining trial data with external information  (IS), ",distributions," distribution"))
-captions3<-c(paste0("Survival curves (median and 95% confidence intervals) obtained using trial data only (MLE) and combining trial data with external information (IS), ",distributions," distribution"))
+captions2<-c(paste0("Survival curve parameter distributions and covariance estimates obtained using trial data only (MLE) and combining trial data with external information  (IS), ",distributions," distribution."))
+captions3<-c(paste0("Survival curves (median and 95% confidence intervals) obtained using trial data only (MLE) and combining trial data with external information (IS), ",distributions," distribution. Vertical bar indicates 95% probability interval for 5 year OS based on external information."))
 
 captions<-character(0)
 
@@ -83,10 +83,56 @@ if(!file.exists(paste0("./output/plots_",dist))){
 )
 ```
 
+## Comparisons of parameter estimates with and without external information 
 
-```{r allplots, results='asis',fig.cap=captions, dpi=300, fig.height=4, fig.width=6}
+The below tables compare parameter estimates and covariance matrices obtained from trial data only with those obtained combining trial data with external information, for each of the survival models under consideration. 
 
-for (dist in dists)
+<!-- Exponential stuff looks bad right now, let me figure out how to fix it later -- AW -->
+
+<!-- ```{r expplots, results='asis',fig.cap=captions, dpi=300, fig.height=4, fig.width=6} -->
+
+<!-- dist = dists[1] -->
+
+
+<!--     print(knitr::kable( -->
+<!--       list(is.models[[dist]][["orig"]]$coefficients,is.models[[dist]]$post_mean), -->
+<!--       caption=paste0("Parameter estimates obtained using trial data only (left) and combining trial data with external information (right): ",distributions[dist]," distribution."))) -->
+
+
+<!--   cat('\n\n')  -->
+
+
+
+<!--   print(knitr::kable( -->
+<!--     list(is.models[[dist]]$post_cov,is.models[[dist]][["orig"]]$cov), -->
+<!--     caption=paste0("Covariance matrices obtained using trial data only (left) and combining trial data with external information (right): ",distributions[dist], " distribution."))) -->
+
+<!-- cat('\n\n')  -->
+
+
+<!--   plots<-readRDS(paste0("./output/plots_",dist)) -->
+
+
+
+<!--   print(plots[[1]]+labs(title=NULL)) -->
+
+<!--   cat('\n\n')  -->
+
+<!--   print(plots[[2]]+labs(title=NULL)) -->
+
+<!--   cat('\n\n')  -->
+
+<!--   print(plots[[3]]+labs(title=NULL)) -->
+
+<!--   cat('\\newpage')  -->
+
+
+<!-- ``` -->
+
+
+```{r paramcomp, results='asis',fig.cap=captions, dpi=300, fig.height=4, fig.width=6}
+
+for (dist in dists[-1])
 {
 
     print(knitr::kable(
@@ -96,35 +142,118 @@ for (dist in dists)
   
   cat('\n\n') 
   
-  
-  
   print(knitr::kable(
     list(is.models[[dist]]$post_cov,is.models[[dist]][["orig"]]$cov),
     caption=paste0("Covariance matrices obtained using trial data only (left) and combining trial data with external information (right): ",distributions[dist], " distribution.")))
   
 cat('\n\n') 
+}
+  cat('\\newpage')
   
-  
+```
+
+
+## Effective sample size plots  
+
+The below plots show the estimated effective sample size (ESS), corresponding to 5000 (weighted) parameter samples, plotted as a function of the tempering parameter alpha, for the survival distributions under consideration. The vertical line shows the optimal value of alpha identified by the algorithm. Larger ESS values are better. 
+
+
+```{r ESSplots, results='asis',fig.cap=captions, dpi=300, fig.height=4, fig.width=6}
+
+for (dist in dists)
+{
+
   plots<-readRDS(paste0("./output/plots_",dist))
-  
-  
-  
-  print(plots[[1]]+labs(title=NULL))
-  
-  cat('\n\n') 
-  
-  print(plots[[2]]+labs(title=NULL))
-  
-  cat('\n\n') 
-  
-  print(plots[[3]]+labs(title=NULL))
-  
-  cat('\\newpage') 
+  print(plots[[1]]) 
+  # +labs(title=NULL)) ## I think including the titles is better?? 
+
+  cat('\n\n')
 }
 
 
+```
+
+## Distribution comparison plots 
+
+The below plots show the estimated effective sample size (ESS), corresponding to 5000 (weighted) parameter samples, plotted as a function of the tempering parameter alpha, for the survival distributions under consideration. The vertical line shows the optimal value of alpha identified by the algorithm. Larger ESS values are better. 
+
+```{r distplots, results='asis',fig.cap=captions, dpi=300, fig.height=4, fig.width=6}
+  
+for (dist in dists[-1]) ## think exponential is wonky -- will try to fix AW ## 
+{
+
+  plots<-readRDS(paste0("./output/plots_",dist))
+  print(plots[[2]])
+  # +labs(title=NULL))
+
+  cat('\n\n')
+}
+
+ 
 
 ```
+
+## Survival comparison plots 
+
+The below plots show the estimated survival curves (median and 95% confidence intervals) obtained using trial data only and combining trial data with external information, for the survival distributions under consideration. Vertical bars indicate the 95% probability interval for 5 year OS based on external information.
+
+```{r survplots, results='asis',fig.cap=captions, dpi=300, fig.height=4, fig.width=6}
+  
+for (dist in dists)
+{
+
+  plots<-readRDS(paste0("./output/plots_",dist))
+  print(plots[[3]])
+  # +labs(title=NULL))
+
+  cat('\\newpage')
+}
+
+ 
+
+```
+
+<!-- ```{r allplots, results='asis',fig.cap=captions, dpi=300, fig.height=4, fig.width=6} -->
+
+<!-- for (dist in dists[-1]) -->
+<!-- { -->
+
+<!--     print(knitr::kable( -->
+<!--       list(is.models[[dist]][["orig"]]$coefficients,is.models[[dist]]$post_mean), -->
+<!--       caption=paste0("Parameter estimates obtained using trial data only (left) and combining trial data with external information (right): ",distributions[dist]," distribution."))) -->
+
+
+<!--   cat('\n\n')  -->
+
+
+
+<!--   print(knitr::kable( -->
+<!--     list(is.models[[dist]]$post_cov,is.models[[dist]][["orig"]]$cov), -->
+<!--     caption=paste0("Covariance matrices obtained using trial data only (left) and combining trial data with external information (right): ",distributions[dist], " distribution."))) -->
+
+<!-- cat('\n\n')  -->
+
+
+<!--   plots<-readRDS(paste0("./output/plots_",dist)) -->
+
+
+
+<!--   print(plots[[1]]+labs(title=NULL)) -->
+
+<!--   cat('\n\n')  -->
+
+<!--   print(plots[[2]]+labs(title=NULL)) -->
+
+<!--   cat('\n\n')  -->
+
+<!--   print(plots[[3]]+labs(title=NULL)) -->
+
+<!--   cat('\\newpage')  -->
+<!-- } -->
+
+
+
+<!-- ``` -->
 
 
 
@@ -134,13 +263,16 @@ cat('\n\n')
 
 ## Parameter variability
 
-Table \@ref(tab:parameffects) shows 'Generalised variance,' i.e., determinants of variance-covariance matrices, of the parameter estimates obtained using trial data only (MLE) and combining trial data withe external information (IS). Formally, the generalised variance gives the area of the 95% highest density ellipse and can be interpreted as a 1-parameter measure of parameter uncertainty, see e.g., https://stats.stackexchange.com/questions/12762/measure-of-spread-of-a-multivariate-normal-distribution .
+Table \@ref(tab:parameffects) shows 'Generalised variance,' i.e., determinants of variance-covariance matrices, of the parameter estimates obtained using trial data only (MLE) and combining trial data withe external information (IS). Formally, the generalised variance gives the area of the 95% highest density ellipse and can be interpreted as a 1-parameter measure of parameter uncertainty. 
+
+<!-- , see e.g., https://stats.stackexchange.com/questions/12762/measure-of-spread-of-a-multivariate-normal-distribution . Not sure about citing stack exchange in an appendix to a paper??  AW -->
+<!-- Now that I think about it, I guess that the determinant is just the trace of the covariance (i.e., sum of the variances), offset by the covariance entries on the off diagnoal? Is my intuition ok here?? AW  -->
 
 
 
 ```{r parameffects,results='asis'}
 
-param.uncertainty<-data.frame("Distribution"=dists,"Distance"=rep(NA,6),"MLE Variance"=rep(NA,6),"IS Variance"=rep(NA,6),"Ratio"=rep(NA,6))
+param.uncertainty<-data.frame("Distribution"=dists,"Distance"=rep(NA,6),"MLE Variance"=rep(NA,6),"IS Variance"=rep(NA,6),"Var. Ratio"=rep(NA,6))
 
 for (i in seq_along(dists))
 {

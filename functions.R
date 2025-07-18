@@ -327,10 +327,10 @@ is_surv_viz_gg <- function(is_surv, times=tseq2,
                    ) #%>%
      # pivot_longer(cols=2:4)
     
-    g<-ggplot(data=df,aes(x=alpha,y=ESS))
-    + geom_line()
-    + geom_vline(xintercept=is_surv$alpha_star)
-    + labs(title=paste0("Effective sample size - ",distributions[dist]))
+    g<-ggplot(data=df,aes(x=alpha,y=ESS)) + 
+     geom_line() + 
+     geom_vline(xintercept=is_surv$alpha_star) + 
+    labs(title=paste0("Effective sample size - ",distributions[dist]))
     # + facet_wrap(name~.,ncol=1,scales="free_y")
       
     
@@ -347,18 +347,33 @@ is_surv_viz_gg <- function(is_surv, times=tseq2,
   # par_new <- rmvnorm(5000, mean = is_surv$post_mean, sigma = is_surv$post_cov)
   if(ind[2]) {
     
-    par_old<-data.frame(par_old)
-    par_old["Method"]<-"Trial data only"
-    
-    par_new<-data.frame(is_surv$par_new)
-    par_new["Method"]<-"Trial data with external information"
-    
-    df<-bind_rows(par_old,par_new)
-    
-    g2<-ggpairs(df, aes(colour = Method, alpha = 0.4),
+    if(dist == "exponential"){
+      par_old <- data.frame(log_rate = par_old)
+      par_old["Method"]<-"Trial data only"
+      
+      par_new<-data.frame(log_rate = is.models$exponential$par_new)
+      par_new["Method"]<-"Trial data with external information"
+      
+      df<-bind_rows(par_old,par_new)
+      
+      g2<- ggplot(df, aes(x = log_rate, colour = Method, fill = Method)) + 
+        geom_density(alpha=0.4 ) +
+        labs(title=paste0("Parameters - ",distributions[dist]))
+    } else{
+      par_old<-data.frame(par_old)
+      par_old["Method"]<-"Trial data only"
+      
+      par_new<-data.frame(is_surv$par_new)
+      par_new["Method"]<-"Trial data with external information"
+      
+      df<-bind_rows(par_old,par_new)
+      
+      g2<-ggpairs(df, aes(colour = Method, alpha = 0.4),
                   columns = 1:(ncol(df)-1),
                   title=paste0("Parameters - ",distributions[dist]))
+    }
     
+        
     print(g2)
 
     cat('\n\n') 

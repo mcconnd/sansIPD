@@ -64,7 +64,10 @@ for (i in 0:5){
   captions[j+2]<-captions3[i+1]
   
 }
-
+## remove if this makes things worse AW 
+captions <- matrix(captions, nrow = 3, ncol = 6)
+captions <- t(captions)
+captions <- as.numeric(captions)
 ```
 
 
@@ -87,52 +90,13 @@ if(!file.exists(paste0("./output/plots_",dist))){
 
 The below tables compare parameter estimates and covariance matrices obtained from trial data only with those obtained combining trial data with external information, for each of the survival models under consideration. 
 
-<!-- Exponential stuff looks bad right now, let me figure out how to fix it later -- AW -->
-
-<!-- ```{r expplots, results='asis',fig.cap=captions, dpi=300, fig.height=4, fig.width=6} -->
-
-<!-- dist = dists[1] -->
-
-
-<!--     print(knitr::kable( -->
-<!--       list(is.models[[dist]][["orig"]]$coefficients,is.models[[dist]]$post_mean), -->
-<!--       caption=paste0("Parameter estimates obtained using trial data only (left) and combining trial data with external information (right): ",distributions[dist]," distribution."))) -->
-
-
-<!--   cat('\n\n')  -->
-
-
-
-<!--   print(knitr::kable( -->
-<!--     list(is.models[[dist]]$post_cov,is.models[[dist]][["orig"]]$cov), -->
-<!--     caption=paste0("Covariance matrices obtained using trial data only (left) and combining trial data with external information (right): ",distributions[dist], " distribution."))) -->
-
-<!-- cat('\n\n')  -->
-
-
-<!--   plots<-readRDS(paste0("./output/plots_",dist)) -->
-
-
-
-<!--   print(plots[[1]]+labs(title=NULL)) -->
-
-<!--   cat('\n\n')  -->
-
-<!--   print(plots[[2]]+labs(title=NULL)) -->
-
-<!--   cat('\n\n')  -->
-
-<!--   print(plots[[3]]+labs(title=NULL)) -->
-
-<!--   cat('\\newpage')  -->
-
-
-<!-- ``` -->
-
 
 ```{r paramcomp, results='asis',fig.cap=captions, dpi=300, fig.height=4, fig.width=6}
+names(is.models[["exponential"]][["orig"]]$coefficients) <- names(is.models[["exponential"]]$post_mean) <- "rate"
 
-for (dist in dists[-1])
+dimnames(is.models[["exponential"]][["orig"]]$cov) <- dimnames(is.models[["exponential"]]$post_cov) <- list("rate", "rate")
+
+for (dist in dists)
 {
 
     print(knitr::kable(
@@ -143,7 +107,7 @@ for (dist in dists[-1])
   cat('\n\n') 
   
   print(knitr::kable(
-    list(is.models[[dist]]$post_cov,is.models[[dist]][["orig"]]$cov),
+    list(is.models[[dist]][["orig"]]$cov, is.models[[dist]]$post_cov),
     caption=paste0("Covariance matrices obtained using trial data only (left) and combining trial data with external information (right): ",distributions[dist], " distribution.")))
   
 cat('\n\n') 
@@ -179,7 +143,7 @@ The below plots show the estimated effective sample size (ESS), corresponding to
 
 ```{r distplots, results='asis',fig.cap=captions, dpi=300, fig.height=4, fig.width=6}
   
-for (dist in dists[-1]) ## think exponential is wonky -- will try to fix AW ## 
+for (dist in dists) 
 {
 
   plots<-readRDS(paste0("./output/plots_",dist))

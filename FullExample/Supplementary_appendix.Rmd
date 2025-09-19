@@ -165,7 +165,7 @@ The below plots show the estimated survival curves (median and 95% confidence in
 
 for (dist in dists)
 {
-                                                      plots<-readRDS(paste0("./output/plots_",dist))
+plots<-readRDS(paste0("./output/plots_",dist))
 print(plots[[3]])
 # +labs(title=NULL))
 cat('\\newpage')
@@ -226,6 +226,8 @@ kableExtra::kable_styling(latex_options = "hold_position")
 
 # Comparison with expertsurv output
 
+In this section we compare the outputs obtained from the importance sampling method described in the paper to that obtained using the Cooney & White method implemented in the expertsurv package. For the gen. Gamma model estimated using the expertsurv package, suitable Monte Carlo performance could not be obtained and hence results are not reported. 
+
 ```{r morecaptions}
 captions4<-paste0("Survival curves (median and 95 percent confidence intervals) obtained by combining trial data with external information using the importance sampling (IS) and expertsurv methods, ",distributions," distribution")
 
@@ -236,9 +238,9 @@ captions5<-c(paste0("Survival curve parameter distributions and covariance estim
 
 ## Plots of survival curves over time
 
-Figures \@ref(fig:expertsurvIS-1) to \@ref(fig:expertsurvIS-6) show comparisons of survival curves (median and 95% confidence/credible intervals) obtained from the importance sampling method described in the paper, with those obtained from the fully Bayesian approach of Cooney & White implemented in the expertsurv package.
+Figures \@ref(fig:expertsurvIS-1) to \@ref(fig:expertsurvIS-5) show comparisons of survival curves (median and 95% confidence/credible intervals) obtained from the importance sampling method described in the paper, with those obtained from the fully Bayesian approach of Cooney & White implemented in the expertsurv package.
 
-Survival curves for the exponential, Weibull, Gompertz and log-logistic models were almost identical between the two methods. For the log-normal and generalised gamma models (Figures \@ref(fig:expertsurvIS-4) and \@ref(fig:expertsurvIS-6)), there was a small but notable shift in the parameter distribution and corresponding survival estimates. The reason for this is not immediately clear. However, in both cases the impact was small and mostly evident in the tails of the survival distributions.
+Survival curves for the exponential, Weibull, Gompertz and log-logistic models were almost identical between the two methods. For the log-normal model (Figure \@ref(fig:expertsurvIS-4)) there was a small but notable shift in the parameter distribution and corresponding survival estimate. The reason for this is not immediately clear. However, in both cases the impact was small and mostly evident in the tail of the survival distribution.
 
 ```{r expertsurvIS, results='asis',fig.cap=captions4, dpi=300}
 source("comp_expertsurv.R")
@@ -254,9 +256,9 @@ cat('\n\n')
 }
 ```
 
-### Comparisons of parameter distributions
+## Comparisons of parameter distributions
 
-Figures \@ref(fig:plotparams-1) to \@ref(fig:plotparams-6) compare survival curve parameter distributions obtained from the importance sampling method described in the paper, with those obtained from the fully Bayesian approach of Cooney & Whilte implemented in the expertsurv package.  Again, some differences are evidence between the two methods for the log-normal and generalised gamma models (Figures \@ref(fig:plotparams-4) and \@ref(fig:plotparams-6)).
+Figures \@ref(fig:plotparams-1) to \@ref(fig:plotparams-5) compare survival curve parameter distributions obtained from the importance sampling method described in the paper, with those obtained from the fully Bayesian approach of Cooney & Whilte implemented in the expertsurv package.  Again, some differences are evident between the two methods for the log-normal model (Figure \@ref(fig:plotparams-4)).
 
 ```{r plotparams,message=F, warning=F, fig.cap=captions5, dpi=300}
 

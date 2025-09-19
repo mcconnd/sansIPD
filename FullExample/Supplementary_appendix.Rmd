@@ -139,7 +139,7 @@ for (dist in dists)
 
 ## Distribution comparison plots 
 
-The below plots show the estimated effective sample size (ESS), corresponding to 5000 (weighted) parameter samples, plotted as a function of the tempering parameter alpha, for the survival distributions under consideration. The vertical line shows the optimal value of alpha identified by the algorithm. Larger ESS values are better. 
+The below plots show parameter distributions and scatter plot estimates obtained using trial data only and by combining trial data with external information for the survival distributions under consideration.
 
 ```{r distplots, results='asis',fig.cap=captions, dpi=300, fig.height=4, fig.width=6}
 

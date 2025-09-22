@@ -1,11 +1,11 @@
 ---
 title: "Supplementary Appendix 3"
-author: "NCPE"
 geometry: margin=2cm
 output: 
   bookdown::pdf_document2:
       extra_dependencies: ["float","longtable","booktabs"]
       number_sections: yes
+      fig_caption: true
       
 ---
 
@@ -51,8 +51,8 @@ The tables and figures in this section show survival curve parameter estimates, 
 ```{r captions}
 
 captions1<-c(paste0("Effective sample size (ESS), corresponding to 5000 (weighted) parameter samples, plotted as a function of the tempering parameter alpha, for the ",distributions," distribution. The vertical line shows the optimal value of alpha identified by the algorithm."))
-captions2<-c(paste0("Survival curve parameter distributions and covariance estimates obtained using trial data only (MLE) and combining trial data with external information  (IS), ",distributions," distribution."))
-captions3<-c(paste0("Survival curves (median and 95% confidence intervals) obtained using trial data only (MLE) and combining trial data with external information (IS), ",distributions," distribution. Vertical bar indicates 95% probability interval for 5 year OS based on external information."))
+captions2<-c(paste0("Survival curve parameter distributions and covariance estimates obtained using trial data only and combining trial data with external information, ",distributions," distribution."))
+captions3<-c(paste0("Survival curves (median and 95% confidence intervals) obtained using trial data only and combining trial data with external information, ",distributions," distribution. Vertical bar indicates 95% probability interval for 5 year OS based on external information."))
 
 captions<-character(0)
 
@@ -73,6 +73,7 @@ captions <- as.numeric(captions)
 
 
 ```{r plotsonly, results='hide', error=FALSE, message=FALSE, warning=FALSE,cache=T}
+# Create the plots if needed, otherwise load them
 invisible(
 for (dist in dists)
 {
@@ -92,7 +93,7 @@ if(!file.exists(paste0("./output/plots_",dist))){
 The below tables compare parameter estimates and covariance matrices obtained from trial data only with those obtained combining trial data with external information, for each of the survival models under consideration. 
 
 
-```{r paramcomp, results='asis',fig.cap=captions, dpi=300, fig.height=4, fig.width=6}
+```{r paramcomp, results='asis', dpi=300, fig.height=4, fig.width=6}
 names(is.models[["exponential"]][["orig"]]$coefficients) <- names(is.models[["exponential"]]$post_mean) <- "rate"
 
 dimnames(is.models[["exponential"]][["orig"]]$cov) <- dimnames(is.models[["exponential"]]$post_cov) <- list("rate", "rate")
@@ -113,16 +114,21 @@ for (dist in dists)
   
 cat('\n\n') 
 }
-  cat('\\newpage')
+  #cat('\\newpage')
   
 ```
+
+
+
+
+
 
 ## Effective sample size plots  
 
 The below plots show the estimated effective sample size (ESS), corresponding to 5000 (weighted) parameter samples, plotted as a function of the tempering parameter alpha, for the survival distributions under consideration. The vertical line shows the optimal value of alpha identified by the algorithm. Larger ESS values are better. 
 
 
-```{r ESSplots, results='asis',fig.cap=captions, dpi=300, fig.height=4, fig.width=6}
+```{r ESSplots, results='asis',fig.cap=captions1, dpi=300, fig.height=3.5, fig.width=6}
 
 for (dist in dists)
 {
@@ -131,7 +137,7 @@ for (dist in dists)
   print(plots[[1]]) 
   # +labs(title=NULL)) ## I think including the titles is better?? 
   
-  cat('\n\n')
+  #cat('\n\n')
 }
 
 
@@ -141,7 +147,7 @@ for (dist in dists)
 
 The below plots show parameter distributions and scatter plot estimates obtained using trial data only and by combining trial data with external information for the survival distributions under consideration.
 
-```{r distplots, results='asis',fig.cap=captions, dpi=300, fig.height=4, fig.width=6}
+```{r distplots, results='asis',fig.cap=captions2, dpi=300, fig.height=4, fig.width=7}
 
 for (dist in dists) 
 {
@@ -154,48 +160,24 @@ for (dist in dists)
 }
 
 
-
 ```
 
 ## Survival comparison plots 
 
 The below plots show the estimated survival curves (median and 95% confidence intervals) obtained using trial data only and combining trial data with external information, for the survival distributions under consideration. Vertical bars indicate the 95% probability interval for 5 year OS based on external information.
                                                     
-```{r survplots, results='asis',fig.cap=captions, dpi=300, fig.height=4, fig.width=6}
+```{r survplots, results='asis',fig.cap=captions3, dpi=300, fig.height=3.5, fig.width=7}
 
 for (dist in dists)
 {
 plots<-readRDS(paste0("./output/plots_",dist))
 print(plots[[3]])
 # +labs(title=NULL))
-cat('\\newpage')
+#cat('\\newpage')
 }
 ```
                                                    
-<!-- ```{r allplots, results='asis',fig.cap=captions, dpi=300, fig.height=4, fig.width=6} -->
-<!-- for (dist in dists[-1]) -->
-<!-- { -->
-<!--     print(knitr::kable( -->
-<!--     list(is.models[[dist]][["orig"]]$coefficients,is.models[[dist]]$post_mean), -->
-<!--       caption=paste0("Parameter estimates obtained using trial data only (left) and combining trial data with external information (right): ",distributions[dist]," distribution."))) -->
-                                                          
-<!--   cat('\n\n')  -->
-<!--   print(knitr::kable( -->
-<!--     list(is.models[[dist]]$post_cov,is.models[[dist]][["orig"]]$cov), --><!--     caption=paste0("Covariance matrices obtained using trial data only (left) and combining trial data with external information (right): ",distributions[dist], " distribution."))) -->
-<!-- cat('\n\n')  -->
-<!--   plots<-readRDS(paste0("./output/plots_",dist)) -->
-<!--   print(plots[[1]]+labs(title=NULL)) -->
-<!--   cat('\n\n')  -->
-<!--   print(plots[[2]]+labs(title=NULL)) -->
-<!--   cat('\n\n')  -->
-<!--   print(plots[[3]]+labs(title=NULL)) -->
-<!--   cat('\\newpage')  -->
-<!-- } -->
-                                                      
-<!-- ``` -->
-```{r, cache=F}
-#knitr::knit_exit()
-```
+
 
 ## Parameter variability
 Table \@ref(tab:parameffects) shows 'Generalised variance,' i.e., determinants of variance-covariance matrices, of the parameter estimates obtained using trial data only (MLE) and combining trial data withe external information (IS). Formally, the generalised variance gives the area of the 95% highest density ellipse and can be interpreted as a 1-parameter measure of parameter uncertainty. 
@@ -233,6 +215,11 @@ captions4<-paste0("Survival curves (median and 95 percent confidence intervals) 
 
 captions5<-c(paste0("Survival curve parameter distributions and covariance estimates obtainedby combining trial data with external information using the importance sampling (IS) and expertsurv methods, ",distributions," distribution"))
 
+# delete gen gamma
+
+captions4<-captions4[1:5]
+captions5<-captions5[1:5]
+
 ```
 
 
@@ -242,7 +229,7 @@ Figures \@ref(fig:expertsurvIS-1) to \@ref(fig:expertsurvIS-5) show comparisons 
 
 Survival curves for the exponential, Weibull, Gompertz and log-logistic models were almost identical between the two methods. For the log-normal model (Figure \@ref(fig:expertsurvIS-4)) there was a small but notable shift in the parameter distribution and corresponding survival estimate. The reason for this is not immediately clear. However, in both cases the impact was small and mostly evident in the tail of the survival distribution.
 
-```{r expertsurvIS, results='asis',fig.cap=captions4, dpi=300}
+```{r expertsurvIS, results='asis',fig.cap=captions4, dpi=300, fig.height=4, fig.width=7}
 source("comp_expertsurv.R")
 # By curve type
 for(i in 1:5)
@@ -260,7 +247,7 @@ cat('\n\n')
 
 Figures \@ref(fig:plotparams-1) to \@ref(fig:plotparams-5) compare survival curve parameter distributions obtained from the importance sampling method described in the paper, with those obtained from the fully Bayesian approach of Cooney & Whilte implemented in the expertsurv package.  Again, some differences are evident between the two methods for the log-normal model (Figure \@ref(fig:plotparams-4)).
 
-```{r plotparams,message=F, warning=F, fig.cap=captions5, dpi=300}
+```{r plotparams,message=F, warning=F, fig.height=4,fig.width=7,fig.cap=captions5, dpi=300}
 
 library(GGally)
 cat('\n\n')
@@ -273,9 +260,16 @@ names(df2)<-names(df1)
 df<-bind_rows(df1,df2)
 
 cat('\n\n')
+if(i == "exponential"){
+      
+      print(ggplot(df, aes(x = rate, colour = Method, fill = Method)) + 
+        geom_density(alpha=0.4 ) +
+        labs(title="Parameters - exponential"))
+    } else{
 
 print(ggpairs(df, aes(colour = Method, alpha = 0.4),
 columns = 1:(ncol(df)-1), title=paste0("Parameters - ",distributions[i])))
+    }
 cat('\n\n')
 }
 ```

@@ -349,10 +349,10 @@ is_surv_viz_gg <- function(is_surv, times=tseq2,
     
     if(dist == "exponential"){
       par_old <- data.frame(log_rate = par_old)
-      par_old["Method"]<-"Trial data only"
+      par_old["Method"]<-"Trial only"
       
       par_new<-data.frame(log_rate = is.models$exponential$par_new)
-      par_new["Method"]<-"Trial data with external information"
+      par_new["Method"]<-"Trial + external"
       
       df<-bind_rows(par_old,par_new)
       
@@ -361,10 +361,10 @@ is_surv_viz_gg <- function(is_surv, times=tseq2,
         labs(title=paste0("Parameters - ",distributions[dist]))
     } else{
       par_old<-data.frame(par_old)
-      par_old["Method"]<-"Trial data only"
+      par_old["Method"]<-"Trial only"
       
       par_new<-data.frame(is_surv$par_new)
-      par_new["Method"]<-"Trial data with external information"
+      par_new["Method"]<-"Trial + external"
       
       df<-bind_rows(par_old,par_new)
       
@@ -392,7 +392,7 @@ is_surv_viz_gg <- function(is_surv, times=tseq2,
     newcurve<-get_sims(dist=dist,coeff = is_surv$post_mean, cov = is_surv$post_cov, tst=is_surv$ex_info$tstar, times=times, tmax=max(times))$survsummary
     
     oldcurve["Method"]="Trial data only"
-    newcurve["Method"]="Trial data with external information"
+    newcurve["Method"]="Trial data with\n external information"
     plotcurves<-bind_rows(oldcurve,newcurve)
     
     # Lower and upper limits to plot prior

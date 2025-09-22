@@ -1,11 +1,11 @@
 \contentsline {section}{\numberline {1}Importance sampling: model diagnostics, parameter distributions, and survival estimates}{1}{section.1}%
 \contentsline {subsection}{\numberline {1.1}Comparisons of parameter estimates with and without external information}{1}{subsection.1.1}%
 \contentsline {subsection}{\numberline {1.2}Effective sample size plots}{3}{subsection.1.2}%
-\contentsline {subsection}{\numberline {1.3}Distribution comparison plots}{6}{subsection.1.3}%
-\contentsline {subsection}{\numberline {1.4}Survival comparison plots}{9}{subsection.1.4}%
-\contentsline {subsection}{\numberline {1.5}Parameter variability}{15}{subsection.1.5}%
-\contentsline {section}{\numberline {2}Comparison with expertsurv output}{15}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Plots of survival curves over time}{15}{subsection.2.1}%
-\contentsline {subsection}{\numberline {2.2}Comparisons of parameter distributions}{20}{subsection.2.2}%
-\contentsline {subsection}{\numberline {2.3}Comparisons of AUC distributions}{25}{subsection.2.3}%
-\contentsline {subsection}{\numberline {2.4}Comparisons of 5-year OS}{26}{subsection.2.4}%
+\contentsline {subsection}{\numberline {1.3}Distribution comparison plots}{7}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Survival comparison plots}{10}{subsection.1.4}%
+\contentsline {subsection}{\numberline {1.5}Parameter variability}{14}{subsection.1.5}%
+\contentsline {section}{\numberline {2}Comparison with expertsurv output}{14}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Plots of survival curves over time}{14}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Comparisons of parameter distributions}{17}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Comparisons of AUC distributions}{20}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Comparisons of 5-year OS}{21}{subsection.2.4}%

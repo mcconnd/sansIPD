@@ -28,9 +28,9 @@ dists<-c("exponential","weibull","gompertz","lognormal",
 # Long names of distributions (named vector)
 distributions<-c("exponential"="Exponential",
                  "weibull"="Weibull",
+                 "gompertz"="Gompertz",
                  "lognormal"="Log-normal",
                  "llogis"="Log-logistic",
-                 "gompertz"="Gompertz",
                  "gengamma"="Gen. Gamma")
 
 # Maximum possible OS for computing AUC

@@ -1,7 +1,3 @@
-## Edit DMC 20240215: get_sims has new parameter 'tmax' for maximum time used to compute AUC.
-## Defaults to max of tseq2 (i.e. final point on plot), however in general should be set so that S(tmax) ~=0
-## Tried to edit get_auc to calculate the upper limit of the integral as the 0.9999 quantile of the relevant distribution
-## This does not work since some distributions plateau!
 
 
 library(flexsurv)
@@ -10,12 +6,7 @@ library(Hmisc)
 library(GGally)
 library(tidyverse)
 
-## Need to update to take multiple timepoints
-## get_sims and is_surv_viz_gg need to be updated at a minimum
-## Not sure about is_surv and IS 
-
-## Might also be useful to have a function that calculates ex_info automatically given tstar, mu, sd etc.
-
+ 
 
 ##---
 ## Overall structure ----
@@ -40,8 +31,7 @@ library(tidyverse)
 ## internally calls IS and get_alpha 
 
 
-## Edit DMC: this is no longer working; replaced with is_surv_viz_gg
-##-- is_surv_viz --
+## is_surv_viz_gg
 ## visualises output from is_surv
 ## diagnostic plots to assess alpha; plot parameters old vs new; plot survival curves
 
@@ -53,7 +43,6 @@ library(tidyverse)
 ## get_alpha --
 ## N.B., get_alpha calls IS
 
-## New functions DMC:
 ## get_sims: extract parameter simulations and corresponding survival curves and AUC estimates
 ## get_auc: calculates AUC
 ## inv_trans: implements inverse transformations
@@ -203,7 +192,7 @@ IS <- function(alpha = 10,
   
   ## need to compute weights on log scale for stability 
 
-  # Edit DMC: need to handle multiple timepoints with 'apply'
+  
   if(length(tstar.) == 1){
      log_p <- ex_info$loss(q_S_tstar) + 
      dmvnorm(q_samples, coeff, cov, log = TRUE)
@@ -425,7 +414,7 @@ is_surv_viz_gg <- function(is_surv, times=tseq2,
   return(outplots)
 }
 
-## Additional functions added by DMC
+
 
 ## get_auc
 
@@ -530,10 +519,7 @@ trans<-function(dist,sims)
 ## 2. simulated survival predictions at time tstar
 ## 3. simulated AUC 
 
-## Edit DMC 20240215: new parameter 'tmax' for maximum time used to compute AUC.
-## Default to max of tseq2
 
-## Edit DMC 20240605: get rid of 'survtimes' output to improve speed
 
 get_sims<-function(dist,coeff,cov,nsim=5000,tst=tstar,times=tseq2,tmax=max(tseq2))
 {

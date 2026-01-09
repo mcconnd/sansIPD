@@ -55,41 +55,11 @@ surv.s10s20.summary<-surv.tstar.long %>%
   ) %>%
   select(Distribution,Timepoint,mean_MLE,median_MLE,CrI_MLE,mean_IS,median_IS,CrI_IS,mean_diff,var_ratio)
   
-write.csv(surv.s10s20.summary,"./output/summary.s10s20.csv")
+#write.csv(surv.s10s20.summary,"./output/summary.s10s20.csv")
 
 
-print(surv.tstar.summary)
+print(surv.s10s20.summary)
 
-library(ggridges)
-
-# Not in use
-ggplot(data=surv.tstar.long,aes(x=S.tstar,y=Distribution,colour=Output,fill=Output))+
-  geom_density_ridges(alpha=0.5,scale=1,
-                      rel_min_height=0.01,
-                      trim=TRUE
-                      )+
-  #geom_histogram()+
-  scale_fill_manual(values=cbPalette[2:3])+
-  scale_colour_manual(values=cbPalette[2:3])+
-  labs(x="OS probability",y="Density")+
-  facet_wrap(.~Timepoint,ncol=2)+
-  theme(legend.position = "bottom")+
-  xlim(c(0,0.6))
-
-
-ggplot(data=surv.tstar.long,aes(x=S.tstar,y=Distribution,colour=Output,fill=Output,height=after_stat(scaled)))+
-  geom_density_ridges(alpha=0.5,scale=1,
-                      #rel_min_height=0.01,
-                     # trim=TRUE,
-                      stat="density",
-                      bounds=c(0,1)
-  )+
-  #geom_histogram()+
-  scale_fill_manual(values=cbPalette[2:3])+
-  scale_colour_manual(values=cbPalette[2:3])+
-  labs(x="OS probability",y="Density")+
-  facet_wrap(.~Timepoint,ncol=2)+
-  theme(legend.position = "bottom")
 
 # Version in use
 g.s10s20<-ggplot(data=surv.tstar.long,aes(x=S.tstar,fill=Output,height=after_stat(scaled)))+
@@ -116,7 +86,6 @@ g.s10s20<-ggplot(data=surv.tstar.long,aes(x=S.tstar,fill=Output,height=after_sta
 
 
 
-# Individual plot (not used)
-#g.ststar2<-g.ststar+theme(text=element_text(size=14))
+
 
 #ggsave("./output/plot_s10s20.png",plot=g.s10s20,width=7,height=7,units="in")

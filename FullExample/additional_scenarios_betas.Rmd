@@ -1,0 +1,620 @@
+---
+title: "Supplementary Appendix 4 - additional scenarios"
+geometry: margin=2cm
+output: 
+  bookdown::pdf_document2:
+      extra_dependencies: ["float","longtable","booktabs"]
+      number_sections: yes
+      fig_caption: true
+      
+---
+
+```{r setup, include=FALSE}
+
+library(tidyverse)
+library(flexsurv)
+library(GGally)
+library(ggpubr)
+library(kableExtra)
+library(formatR)
+library(ggplot2)
+
+knitr::opts_chunk$set(echo = FALSE,
+                      message= FALSE, 
+                      warning=FALSE, 
+                      cache=TRUE,
+                      tidy=TRUE,
+                      dev = 'png',
+                      tidy.opts=list(width.cutoff=60),
+                      fig.pos = "H", 
+                      out.extra = "",
+                      latex_options = "HOLD_position",
+                      results='asis'
+                      )
+
+set.seed(12345)
+
+```
+
+
+```{r run}
+# Fit the models etc
+source("setup.R")
+source("run_all.R")
+
+```
+
+
+
+# Scenarios
+
+
+
+
+
+
+
+The base case analysis assumes a prior distribution for 5-year OS given by normal prior with central 95% density contained within the range (20% to 55%); this distribution has mean ```r mu_t ``` and variance ```r sigma_t^2```. We consider five additional scenarios:
+
++ Scenario 1: Alternative specification of base case: Beta distribution with same mean and variance 
++ Scenario 2: Base case variance halved ("right and more confident"), mean unchanged yielding 95% prior interval of 25% to 50%
++ Scenario 3: Base case variance doubled ("right and less confident"), mean unchanged 13% to 62%
++ Scenario 4: Base case mean decreased by 20%, variance unchanged, Beta distribution ("wrong with same confidence").
++ Scenario 5: Base case mean decreased by 20%, variance halved, Beta distribution ("wrong and more confident")
++ Scenario 6: Base case mean decreased by 20%, variance doubled, Beta distribution ("wrong and less confident")
+
+For all scenarios, we compare mean lifetime OS and 5-year landmark OS, as before.
+
+```{r}
+
+# Prior means for each scenario
+mu.ts<-c(mu_t, #BC
+         mu_t, #SCA 1...
+         mu_t,
+         mu_t,
+         mu_t-0.2,
+         mu_t-0.2,
+         mu_t-0.2 #...SCA 6
+         )
+
+# Prior variances
+var.t<-sigma_t^2
+var.ts<-c(1,1,0.5,2,1,0.5,2)*var.t
+
+sigma.ts<-sqrt(var.ts)
+
+
+# Get params of Beta distributions with given mean and var
+estBetaParams <- function(mu, var) {
+  alpha <- ((1 - mu) / var - 1 / mu) * mu ^ 2
+  beta <- alpha * (1 / mu - 1)
+  return(params = list(alpha = alpha, beta = beta))
+}
+
+# Scenarios 1, 4, 5 and 6 use beta priors 
+beta.params<-estBetaParams(mu.ts[c(2,5:7)],var.ts[c(2,5:7)])
+
+# Distrbution summaries
+
+
+
+prior.sca<-data.frame("Distribution"=c("Normal","Beta",rep("Normal",2),rep("Beta",3)),
+                                     "mean"=mu.ts,
+                                      "sd"=sigma.ts,
+                      "Beta.a"=estBetaParams(mu.ts,var.ts)[1],
+                      "Beta.b"=estBetaParams(mu.ts,var.ts)[2]
+                      ) %>%
+  mutate(Beta.a=if_else(Distribution=="Beta",alpha,NA),
+         Beta.b=if_else(Distribution=="Beta",beta,NA),
+         lwr.95=if_else(Distribution=="Beta",
+                        qbeta(0.025,Beta.a,Beta.b),
+                        qnorm(0.025,mean=mean,sd=sd)),
+         upr.95=if_else(Distribution=="Beta",
+                        qbeta(0.975,Beta.a,Beta.b),
+                        qnorm(0.975,mean=mean,sd=sd))
+                     )
+
+kbl(prior.sca,digits=3)
+
+
+
+
+```
+
+
+
+
+```{r}
+
+
+if(file.exists("is.scenarios.sims.RDS")&file.exists("is.scenarios.RDS"))
+   {
+     is.scenarios<-readRDS("is.scenarios.RDS")
+     is.scenarios.sims<-readRDS("is.scenarios.sims.RDS")
+} else{
+
+is.scenarios<-list()
+is.scenarios.sims<-list()
+
+for(i in 1:7){
+  
+  prior.dist<-prior.sca$Distribution[i]
+  
+  prior.loss<-if(prior.dist=="Normal"){
+    function(x){dnorm(x,
+                      mean=prior.sca$mean[i],
+                      sd=prior.sca$sd[i],
+                      log=TRUE)}
+  } else{
+    function(x){dbeta(x,
+                      shape1=prior.sca$Beta.a[i],
+                      shape2=prior.sca$Beta.b[i],
+                      log=TRUE)
+    
+  }}
+  
+  ex.info.sca<-list("tstar"=tstar,
+                  "loss"=prior.loss,
+                  "lower.probs"=prior.sca$lwr.95[i],
+                  "upper.probs"=prior.sca$upr.95[i]
+)
+  
+  is.scenarios[[i]]<-list()
+  is.scenarios.sims[[i]]<-list()
+  
+  for(dist in dists){
+  
+  old.params<-mle.sims[[dist]]
+   # Model fits for later
+  fit<-is_surv(
+    coeff=old.params$coeff,
+    cov=old.params$cov,
+    dist=dist,
+    ex_info=ex.info.sca
+  )
+  
+  is.scenarios[[i]][[dist]]<-fit
+  is.scenarios.sims[[i]][[dist]]<-get_sims(dist=dist,coeff=fit$post_mean,cov=fit$post_cov,tmax=t.max)
+  rm(old.params,fit)
+  
+}
+}
+saveRDS(is.scenarios,file="is.scenarios.RDS")
+saveRDS(is.scenarios.sims,file="is.scenarios.sims.RDS")
+}
+```
+
+
+
+
+```{r}
+# Data frames of simulations
+
+#Number of scenarios incl. base case 
+n.sca<-nrow(prior.sca)
+
+#AUC
+sims.auc<-data.frame(matrix(NA,nrow=5000,ncol=n.sca*6))
+names(sims.auc)<-paste0(c(rep("BC_",6),paste0(rep("SCA",(n.sca-1)*6),rep(1:(n.sca-1),each=6),"_")),
+                          rep(dists,n.sca))
+# 5 year OS
+sims.ststar<-sims.auc
+
+# Extract the simulations
+for(i in 1:n.sca){
+for(j in seq_along(dists))
+{
+sims.auc[,(i-1)*6+j]<-is.scenarios.sims[[i]][[dists[j]]][["AUC"]]
+sims.ststar[,(i-1)*6+j]<-is.scenarios.sims[[i]][[dists[j]]][["s.tstar"]]
+}
+}
+
+names(sims.auc)<-paste0(names(sims.auc),"_AUC")
+names(sims.ststar)<-paste0(names(sims.ststar),"_STSTAR")
+
+sca.sims<-cbind(sims.auc,sims.ststar)
+
+
+sca.longsims<-sca.sims%>%
+  pivot_longer(1:84,
+               names_to="name",
+               values_to="value")%>%
+  separate_wider_delim(name,delim="_",names=c("Scenario","Distribution","Variable"))
+
+# For later use with ggplot - full distribution and scenario names
+sca.longsims2<-sca.longsims%>%
+    mutate(Distribution=str_replace_all(Distribution,distributions),
+         Scenario=str_replace_all(Scenario,"SCA","Scenario "),
+         Scenario=str_replace_all(Scenario,"BC","Base case "))
+
+# Create summary stats
+sca.summary<-sca.longsims%>%
+  group_by(Scenario,Distribution,Variable) %>%
+  summarise(mean=mean(value),
+            sd=sd(value),
+            median=median(value),
+            lwr.95=quantile(value,0.025),
+            upr.95=quantile(value,0.975))%>%
+  ungroup()%>%
+  mutate(across(where(is.character),str_trim))
+
+# Calculate differences versus BC
+
+sca.diffs<-sca.summary %>%
+  #mutate(Scenario=str_replace_all(Scenario," ",""))%>%
+  select(Distribution, Scenario, Variable, mean, sd) %>%
+  pivot_wider(names_from=Scenario,
+              values_from=4:5)%>%
+  mutate(across(mean_SCA1:mean_SCA6,~.x-mean_BC,.names = "mean.diff_{.col}"),
+         across(sd_SCA1:sd_SCA6,~(.x/sd_BC)^2,.names="var.ratio_{.col}")
+         ) %>%
+  select(Distribution,Variable,contains(c("diff","ratio")))%>%
+  rename_with(~gsub("_sd|_mean","",.x)) %>%
+  pivot_longer(3:14,names_to = "name",values_to = "value") %>%
+  separate_wider_delim(name,delim="_",names=c("Stat","Scenario"))%>%
+ # mutate(Scenario=gsub("o","o ",Scenario),
+ #        Distribution=str_trim(Distribution)) %>%
+  pivot_wider(names_from = Stat,values_from = value)
+
+# Merge with summary table
+
+sca.summary<-sca.summary %>%
+    full_join(sca.diffs,by=join_by(Distribution,Scenario,Variable)) %>%
+  mutate(Distribution=str_replace_all(Distribution,distributions),
+         Scenario=str_replace_all(Scenario,"SCA","Scenario "),
+         Scenario=str_replace_all(Scenario,"BC","Base case ")
+         )
+  
+
+```
+
+# Results - survival curves
+
+```{r,fig.dim=c(7,9), fig.cap="Survival curves (posterior median) for the base case and scenarios 1 through 6",dpi=300}
+
+# Get posterior median survival time estimates
+sca.ests<-list()
+for(i in 1:n.sca){
+  sca.ests[[i]]<-data.frame(matrix(NA,nrow=length(tseq2),ncol=7))
+  names(sca.ests[[i]])<-c("time",dists)
+  sca.ests[[i]]$time<-tseq2
+  
+for(j in seq_along(dists))
+{
+  
+  sca.ests[[i]][,dists[j]]<-is.scenarios.sims[[i]][[dists[j]]][["survsummary"]]$S_median
+}
+}
+names(sca.ests)<-c("BC",paste0("SCA_",1:6))
+
+# Reshape for plotting
+#
+sc.names<-c("Base Case",
+            paste0("Scenario ",1:6)
+            )
+names(sc.names)<-c("BC",
+                   paste0("SCA_",1:6))
+
+sca.ests.all<-bind_rows(sca.ests,.id="id") %>%
+  pivot_longer(3:8,
+               names_to="dist",
+               values_to="St") %>%
+  mutate(Scenario=str_replace_all(id,sc.names),
+         Distribution=str_replace_all(dist,distributions))
+  
+
+ggplot(data=sca.ests.all,aes(x=time,y=St,colour=Scenario))+
+  geom_line(lwd=1)+
+  facet_wrap(.~Distribution,ncol=2)+
+  theme(legend.position = "bottom")+
+  ylab("S(t)")
+
+
+```
+
+# Results - mean lifetime OS
+
+
+
+
+```{r}
+
+cat('\n\n')
+
+auc.summary<-sca.summary %>%
+  filter(Variable=="AUC") %>%
+  arrange(Distribution) %>%
+  mutate(across(where(is.numeric),~format(round(.x,2),nsmall=2)),
+         CrI.95 = paste0("(",lwr.95,", ",upr.95,")")
+         ) %>%
+  select(Distribution,Scenario,Mean=mean,Median=median,CrI.95,Mean.Difference=mean.diff,Variance.Ratio=var.ratio)
+
+kbl(auc.summary,
+    caption="Mean OS for Scenarios 1 through 5, including comparisons with base case (probabilistic mean difference and variance ratio)",
+    booktabs=T
+    )%>%
+  kable_styling(latex_options="striped") %>%
+  add_header_above(c(" "=5,"Scenario versus Base Case"=2))
+
+#knitr::kable(auc.summary,caption="Mean OS for Scenarios 1 through 5, including comparisons with base case (probabilistic mean difference and variance ratio)")
+
+cat('\n\n')
+
+```
+
+```{r, fig.dim=c(7,9), fig.cap="Boxplots of probabilistic simulations of mean OS in the Base Case and in Scenarios 1 through 5.",dpi=300}
+
+# IN USE
+
+
+g.auc<-ggplot(data=filter(sca.longsims2,Variable=="AUC"),aes(y=value,x=Scenario,fill=Scenario))+
+  geom_boxplot(outliers=FALSE)+
+  facet_wrap(.~Distribution,ncol=2,scales="free_y")+
+  labs(y="AUC (Mean lifetime OS, Months)")+
+  theme(legend.position = "none",
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        axis.title.x = element_blank())
+  
+g.auc
+
+cat('\n\n')
+
+```
+# Results - 5 year survival probabilities
+
+```{r}
+
+s5.summary<-sca.summary %>%
+  filter(Variable=="STSTAR") %>%
+  arrange(Distribution) %>%
+  mutate(across(where(is.numeric),~format(round(.x,2),nsmall=2)),
+         CrI.95 = paste0("(",lwr.95,", ",upr.95,")")
+         ) %>%
+  select(Distribution,Scenario,Mean=mean,Median=median,CrI.95,Mean.Difference=mean.diff,Variance.Ratio=var.ratio)
+
+kbl(s5.summary,
+    caption="Summary of probabilistic estimates of 5-year OS for the base case and Scenarios 1 through 5, including comparisons between each scenario and the base case (probabilistic mean difference and variance ratio)",
+    booktabs=T
+    )%>%
+  kable_styling(latex_options="striped")%>%
+  add_header_above(c(" "=5,"Scenario versus Base Case"=2))
+
+cat('\n\n')
+
+```
+
+```{r, fig.dim=c(7,9),fig.cap="Boxplots of probabilistic simulations of 5-year OS in the Base Case and in Scenarios 1 through 5.",dpi=150}
+
+# IN USE
+
+g.s5<-ggplot(data=filter(sca.longsims2,Variable=="STSTAR"),aes(y=value,x=Scenario,fill=Scenario))+
+  geom_boxplot(outliers=FALSE)+
+  facet_wrap(.~Distribution,ncol=2,scales="free_y")+
+  labs(y="5-year survival probabilities")+
+  theme(legend.position = "none",
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        axis.title.x = element_blank())
+  
+g.s5
+
+
+cat('\n\n')
+```
+
+```{r, cache=FALSE}
+
+knitr::knit_exit()
+```
+
+
+# Old code - not in use
+
+# Results - mean lifetime OS
+
+
+
+```{r}
+
+#AUC for the models
+auc.is.sca<-data.frame(matrix(NA,nrow=5000,ncol=6*6))
+
+names(auc.is.sca)<-paste0(c(rep("Base case : ",6),paste0(rep("Scenario ",30),rep(1:5,each=6)," : ")),
+                          rep(distributions,6))
+
+for(i in 1:6){
+for(j in seq_along(dists))
+{
+auc.is.sca[,(i-1)*6+j]<-is.scenarios.sims[[i]][[dists[j]]][["AUC"]]
+
+}
+}
+
+
+auc.sca.long<-auc.is.sca %>%
+pivot_longer(1:36,
+names_to="name",
+values_to="AUC")%>%
+  separate_wider_delim(name,delim=":",names=c("Scenario","Distribution")) 
+
+# Summarise by distribution and scenario
+auc.sca.summary<-auc.sca.long%>%
+  group_by(Scenario,Distribution) %>%
+  summarise(mean=mean(AUC),
+            sd=sd(AUC),
+            median=median(AUC),
+            lwr.95=quantile(AUC,0.025),
+            upr.95=quantile(AUC,0.975))%>%
+  ungroup()%>%
+  mutate(across(where(is.character),str_trim))
+
+#print(knitr::kable((auc.sca.summary)))
+
+
+
+
+# Calculate difference from base case (mean difference and variance ratio)
+# Not used for now
+
+auc.sca.diff<-auc.sca.summary %>%
+  mutate(Scenario=str_replace_all(Scenario," ",""))%>%
+  select(Distribution, Scenario, mean, sd) %>%
+  pivot_wider(names_from=Scenario,
+              values_from=3:4)%>%
+  mutate(across(3:7,~.x-mean_Basecase,.names = "diff_{.col}"),
+         across(9:13,~(.x/sd_Basecase)^2,.names="var_ratio_{.col}"),
+         across(where(is.numeric),~format(round(.x,2),nsmall=2))
+         ) %>%
+  select(Distribution,contains(c("diff","ratio")))%>%
+  rename_with(~gsub("_sd","",.x))
+  
+#print(knitr::kable((auc.sca.diff)))
+
+
+# In use:
+# Second attempt at formatting the differences table
+auc.sca.diff2<-auc.sca.summary %>%
+  mutate(Scenario=str_replace_all(Scenario," ",""))%>%
+  select(Distribution, Scenario, mean, sd) %>%
+  pivot_wider(names_from=Scenario,
+              values_from=3:4)%>%
+  mutate(across(3:7,~.x-mean_Basecase,.names = "mean.diff_{.col}"),
+         across(9:13,~(.x/sd_Basecase)^2,.names="var.ratio_{.col}")
+         ) %>%
+  select(Distribution,contains(c("diff","ratio")))%>%
+  rename_with(~gsub("_sd|_mean","",.x)) %>%
+  pivot_longer(2:11,names_to = "name",values_to = "value") %>%
+  separate_wider_delim(name,delim="_",names=c("Variable","Scenario"))%>%
+  mutate(Scenario=gsub("o","o ",Scenario),
+         Distribution=str_trim(Distribution)) %>%
+  pivot_wider(names_from = Variable,values_from = value)
+
+
+# Merge with summary and print nicely
+
+auc.sca.summary2<-auc.sca.summary %>%
+    full_join(auc.sca.diff2,by=join_by(Distribution,Scenario)) %>%
+  arrange(Distribution) %>%
+  mutate(across(where(is.numeric),~format(round(.x,2),nsmall=2)),
+         CrI.95 = paste0("(",lwr.95,", ",upr.95,")")
+         ) %>%
+  select(Distribution,Scenario,mean,median,CrI.95,mean.diff,var.ratio)
+
+print(knitr::kable(auc.sca.summary2))
+
+# Plots
+
+# AUC density plot
+
+# NOT USED
+# No truncation of AUC values but truncation of graph
+library(ggridges)
+cat('\n\n')
+g.auc<-ggplot(data=auc.sca.long,aes(x=AUC,y=Distribution,colour=Scenario,fill=Scenario))+
+geom_density_ridges(alpha=0.5,scale=0.95)+
+#scale_fill_manual(values=cbPalette[2:3])+                                                      
+#scale_colour_manual(values=cbPalette[2:3])+
+labs(x="AUC (Mean lifetime OS, Months)",y="Density")+
+xlim(0,180)+
+theme(legend.position = "bottom")
+  
+#g.auc
+cat('\n\n')
+```
+
+```{r, fig.dim=c(7,9)}
+
+# IN USE
+
+g.auc3<-ggplot(data=auc.sca.long,aes(y=AUC,x=Scenario,fill=Scenario))+
+geom_boxplot(outliers=FALSE)+
+#scale_fill_manual(values=cbPalette[2:3])+                                                      
+#scale_colour_manual(values=cbPalette[2:3])+
+facet_wrap(.~Distribution,ncol=2,scales="free_y")+
+labs(y="AUC (Mean lifetime OS, Months)")+
+theme(legend.position = "none",
+      axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  
+
+g.auc3
+
+
+
+```
+
+# Results - 5 year survival probabilities
+
+```{r}
+
+#AUC for the models
+s5.is.sca<-data.frame(matrix(NA,nrow=5000,ncol=6*6))
+
+names(s5.is.sca)<-paste0(c(rep("Base case : ",6),paste0(rep("Scenario ",30),rep(1:5,each=6)," : ")),
+                          rep(distributions,6))
+
+for(i in 1:6){
+for(j in seq_along(dists))
+{
+s5.is.sca[,(i-1)*6+j]<-is.scenarios.sims[[i]][[dists[j]]][["s.tstar"]]
+
+}
+}
+
+
+s5.sca.long<-s5.is.sca %>%
+pivot_longer(1:36,
+names_to="name",
+values_to="S.tstar")%>%
+  separate_wider_delim(name,delim=":",names=c("Scenario","Distribution")) 
+
+# Summarise by distribution and scenario
+s5.sca.summary<-s5.sca.long%>%
+  group_by(Scenario,Distribution) %>%
+  summarise(mean=mean(S.tstar),
+            sd=sd(S.tstar),
+            median=median(S.tstar),
+            lwr.95=quantile(S.tstar,0.025),
+            upr.95=quantile(S.tstar,0.975))%>%
+  ungroup()
+
+print(knitr::kable((s5.sca.summary)))
+
+# Calculate difference from base case (mean difference and variance ratio)
+s5.sca.diff<-s5.sca.summary %>%
+  mutate(Scenario=str_replace_all(Scenario," ",""))%>%
+  select(Distribution, Scenario, mean, sd) %>%
+  pivot_wider(names_from=Scenario,
+              values_from=3:4)%>%
+  mutate(across(3:7,~.x-mean_Basecase,.names = "diff_{.col}"),
+         across(9:13,~(.x/sd_Basecase)^2,.names="var_ratio_{.col}"),
+         across(where(is.numeric),~format(round(.x,4),nsmall=4))
+         ) %>%
+  select(Distribution,contains(c("diff","ratio")))%>%
+  rename_with(~gsub("_sd","",.x))
+  
+print(knitr::kable((s5.sca.diff)))
+
+
+
+# Plots
+
+# AUC density plot
+# No truncation of AUC values but truncation of graph
+library(ggridges)
+cat('\n\n')
+g.tstar<-ggplot(data=s5.sca.long,aes(x=S.tstar,y=Distribution,colour=Scenario,fill=Scenario))+
+geom_density_ridges(alpha=0.5,scale=0.95)+
+#scale_fill_manual(values=cbPalette[2:3])+                                                      
+#scale_colour_manual(values=cbPalette[2:3])+
+labs(x="5-year OS probability",y="Density")+
+xlim(0,1)+
+theme(legend.position = "bottom")
+  
+g.tstar
+cat('\n\n')
+
+
+
+
+
+
+```

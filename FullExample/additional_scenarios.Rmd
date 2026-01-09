@@ -48,13 +48,35 @@ source("run_all.R")
 
 # Scenarios
 
+
+```{r}
+
+mu.ts<-c(mu_t,mu_t,mu_t,mu_t-0.2,mu_t-0.2,mu_t-0.2)
+var.t<-sigma_t^2
+var.ts<-c(1,0.5,2,1,0.5,2)*var.t
+sigma.ts<-sqrt(var.ts)
+
+estBetaParams <- function(mu, var) {
+  alpha <- ((1 - mu) / var - 1 / mu) * mu ^ 2
+  beta <- alpha * (1 / mu - 1)
+  return(params = list(alpha = alpha, beta = beta))
+}
+
+beta.params<-estBetaParams(c(mu_t,mu.ts[4:6]),c(var.t,var.ts[4:6]))
+
+
+qbeta(0.025,beta.params$alpha,beta.params$beta)
+qbeta(0.975,beta.params$alpha,beta.params$beta)
+
+```
+
 The base case analysis assumes a prior distribution for 5-year OS given by normal prior with central 95% density contained within the range (20% to 55%); this distribution has mean ```r mu_t ``` and variance ```r sigma_t^2```. We consider five additional scenarios:
 
-+ Scenario 1: Variance halved
-+ Scenario 2: Variance doubled
-+ Mean decreased by 20%, same variance
-+ Mean decreased by 20%, variance halved
-+ Mean decreased by 20%, variance doubled
++ Scenario 1: Variance halved (right and more confident), yielding 95% prior interval of 25% to 50%
++ Scenario 2: Variance doubled (right and less confident), 13% to 62%
++ Scenario 3: Beta distribution with mean decreased by 20%, same variance (wrong with same confidence).
++ Scenario 4: Beta distribution with mean decreased by 20%, variance halved (wrong and more confident)
++ Scenario 5: Beta distribution with mean decreased by 20%, variance doubled (wrong and less confident)
 
 For all scenarios, we compare mean lifetime OS and 5-year landmark OS, as before.
 

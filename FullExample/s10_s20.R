@@ -76,11 +76,11 @@ ggplot(data=surv.tstar.long,aes(x=S.tstar,y=Distribution,colour=Output,fill=Outp
   theme(legend.position = "bottom")+
   xlim(c(0,0.6))
 
-# Version in use
-g.s10s20<-ggplot(data=surv.tstar.long,aes(x=S.tstar,y=Distribution,colour=Output,fill=Output,height=after_stat(scaled)))+
+
+ggplot(data=surv.tstar.long,aes(x=S.tstar,y=Distribution,colour=Output,fill=Output,height=after_stat(scaled)))+
   geom_density_ridges(alpha=0.5,scale=1,
-                      rel_min_height=0.01,
-                      trim=TRUE,
+                      #rel_min_height=0.01,
+                     # trim=TRUE,
                       stat="density",
                       bounds=c(0,1)
   )+
@@ -91,7 +91,28 @@ g.s10s20<-ggplot(data=surv.tstar.long,aes(x=S.tstar,y=Distribution,colour=Output
   facet_wrap(.~Timepoint,ncol=2)+
   theme(legend.position = "bottom")
 
-
+# Version in use
+g.s10s20<-ggplot(data=surv.tstar.long,aes(x=S.tstar,fill=Output,height=after_stat(scaled)))+
+  geom_density(alpha=0.5,#scale=1,
+                      #rel_min_height=0.01,
+                       trim=TRUE,
+                      #stat="scaled",
+                      bounds=c(0,1)
+  )+
+  #geom_histogram()+
+  scale_fill_manual(values=cbPalette[2:3])+
+  scale_colour_manual(values=cbPalette[2:3])+
+  labs(x="OS probability",y="Density")+
+  facet_wrap(Distribution~Timepoint,ncol=2,scales="free_y",
+             labeller = 
+               label_wrap_gen(multi_line=FALSE),
+             strip.position="top"
+               #labeller()
+             )+
+ # facet_grid(Distribution~Timepoint,scales="free",shrink=TRUE)+
+  theme(legend.position = "bottom",
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
 
 
 

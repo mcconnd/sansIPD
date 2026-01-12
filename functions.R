@@ -217,7 +217,7 @@ IS <- function(alpha = 10,
   ESS1 = iter/(1 + cv_star)
   ESS2 = sqrt(mean((w0/wbar - 1)^2))
   
-  return(list(diag = c(cv_star, ESS1, ESS2), weights = w0, pars = list(post_mean, post_cov), samples=q_samples))
+  return(list(diag = c(cv_star, ESS1, ESS2), weights = w0, pars = list(post_mean, post_cov), samples=q_samples, samples_trans=q_samples_trans))
 } # IS
 
 
@@ -264,12 +264,16 @@ is_surv <- function(
   cat("fitting restricted model ...\n")
   
   # Run importance sampling for optimal alpha and get posterior parameter estimates
-  new_coeffs <- IS(alpha = alpha_list$alpha_star, iter = alpha_list$iter_star, 
+  is_out <- IS(alpha = alpha_list$alpha_star, iter = alpha_list$iter_star, 
                    #surv_fit = surv_fit, 
                    coeff=coeff,
                    cov=cov,
                    dist=dist,
-                   ex_info = ex_info)$pars
+                   ex_info = ex_info)
+  
+  # Mean and covariance matrix
+  new_coeffs<-is_out$pars
+
   
   post_mean <-  new_coeffs[[1]]
   post_cov <- new_coeffs[[2]]
@@ -290,6 +294,12 @@ is_surv <- function(
   output$iter_star <- alpha_list$iter_star
   output$ESS_mat <- alpha_list$ESS_mat
   output$alpha_vec <- alpha_list$alpha_vec
+  
+  # Edit 20260112 to include raw samples and sample weights
+  output$raw_samples_mvn<-is_out$samples
+  output$raw_samples_nat<-is_out$samples_trans
+  output$sample_weights<-is_out$weights
+  
   output
 }
 
@@ -576,6 +586,7 @@ get_sims<-function(dist,coeff,cov,nsim=5000,tst=tstar,times=tseq2,tmax=max(tseq2
   
   # AUC simulations
   out[["AUC"]]<-get_auc(dist=dist,params = out[["sims.mvn"]],upr = tmax)
+  
   
   return(out)
 }

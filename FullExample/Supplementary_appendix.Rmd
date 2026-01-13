@@ -43,11 +43,6 @@ source("run_all.R")
 ```
 
 
-
-# Importance sampling: model diagnostics, parameter distributions, and survival estimates
-
-The tables and figures in this section show survival curve parameter estimates, covariance structures, importance sampling diagnostics, and (probabilistic) survival curve predictions, obtained from trial data only estimated using maximum likelihood estimation (MLE), and combining trial data with external information using the importance sampling algorithm described in the methods section of the main article and in Appendix 1.
-
 ```{r captions}
 
 captions1<-c(paste0("Effective sample size (ESS), corresponding to 5000 (weighted) parameter samples, plotted as a function of the tempering parameter alpha, for the ",distributions," distribution. The vertical line shows the optimal value of alpha identified by the algorithm."))
@@ -88,6 +83,139 @@ if(!file.exists(paste0("./output/plots_",dist))){
 )
 ```
 
+# Plots of survival curves
+
+
+
+The below plots show the estimated survival curves (pointwise probabilistic median and 95% confidence intervals) obtained using trial data only and combining trial data with external information, for the survival distributions under consideration. Vertical bars indicate the 95% probability interval for 5 year OS based on external information.
+                                                    
+```{r survplots, results='asis',fig.cap=captions3, dpi=300, fig.height=3.5, fig.width=7}
+
+for (dist in dists)
+{
+plots<-readRDS(paste0("./output/plots_",dist))
+print(plots[[3]])
+# +labs(title=NULL))
+#cat('\\newpage')
+}
+```
+                                                   
+
+
+
+# Probabilistic distributions of 10- and 20-year OS
+
+```{r}
+
+## This code summarises and plots probability density of survival estimates at time 10 years and 20 years from the prior, likelihood, and 'posterior'
+
+surv.s10s20<-data.frame()
+
+for(dist in dists)
+{
+  # Extract parameter sims
+  param.sims.mle<-mle.sims[[dist]][["sims.nat"]]
+  param.sims.is<-is.sims[[dist]][["sims.nat"]]
+  
+  # Predict survival
+  
+  df.mle<-data.frame(sapply(c(120,240),function(x){s_fun(t=x,dist=dist,trans_pars=param.sims.mle)}))
+  names(df.mle)<-c("S.10","S.20")
+  df.mle[,"method"]<-"MLE"
+  
+  df.is<-data.frame(sapply(c(120,240),function(x){s_fun(t=x,dist=dist,trans_pars=param.sims.is)}))
+  names(df.is)<-c("S.10","S.20")
+  df.is[,"method"]<-"IS"
+  
+  df.st<-rbind.data.frame(df.mle,df.is)
+  df.st[,"distribution"]<-dist
+  
+  # Combine into existing datafram
+  
+  surv.s10s20<-rbind.data.frame(surv.s10s20,df.st)
+  
+}
+
+surv.s10s20.long<-pivot_longer(surv.s10s20,cols=1:2,values_to = "S.tstar") %>%
+  mutate(Distribution=str_replace_all(distribution,distributions),
+         Timepoint=str_replace_all(name,c("S.10"="10 years","S.20"="20 years")),
+         Output=str_replace_all(method,c("MLE"="Trial data only","IS"="Trial data with external information")))
+
+
+###
+
+
+surv.s10s20.summary<-surv.s10s20.long %>% 
+  group_by(Distribution,Timepoint,method) %>%
+  summarise(mean=mean(S.tstar),
+            median=median(S.tstar),
+            sd=sd(S.tstar),
+            lwr.95=quantile(S.tstar,0.025),
+            upr.95=quantile(S.tstar,0.975),
+            ) %>%
+  ungroup()%>%
+  pivot_wider(names_from=method,
+              values_from=4:8) %>%
+  mutate(mean_diff=mean_IS-mean_MLE,
+         var_ratio=sd_IS^2/sd_MLE^2,
+         across(where(is.numeric),~format(round(.x,2),nsmall=2)),
+         CrI_IS=paste0("(",lwr.95_IS," to ",upr.95_IS,")"),
+         CrI_MLE=paste0("(",lwr.95_MLE," to ",upr.95_MLE,")"),
+  ) %>%
+  select(Distribution,Timepoint,mean_MLE,median_MLE,CrI_MLE,mean_IS,median_IS,CrI_IS,mean_diff,var_ratio)
+  
+#write.csv(surv.s10s20.summary,"./output/summary.s10s20.csv")
+
+
+kbl(surv.s10s20.summary,
+    caption = "Summary of probabilistic distributions of 10- and 20-year OS, estimated using Trial Data Only via MLE, and combining Trial Data with External information via the Importance Sampling method",
+    col.names = c("Distribution", "Timepoint", rep(c("Mean","Median","95% CrI"),2),"Mean Diff.","Var. Ratio"),
+    booktabs=T) %>%
+  kable_styling(latex_options = c("HOLD_position","striped")) %>%
+  add_header_above(c(" "=2,
+                     "Trial Only"=3,
+                     "Trial + External" =3,
+                     "Difference"=2))
+
+```
+
+```{r, fig.dim=c(7,9),fig.cap = "Density plots of probabilistic distributions of 10- and 20-year OS, estimated using Trial Data Only via MLE, and combining Trial Data with External information via the Importance Sampling method",dpi=300}
+
+# Version in use
+g.s10s20<-ggplot(data=surv.s10s20.long,aes(x=S.tstar,fill=Output,height=after_stat(scaled)))+
+  geom_density(alpha=0.5,#scale=1,
+                      #rel_min_height=0.01,
+                       trim=TRUE,
+                      #stat="scaled",
+                      bounds=c(0,1)
+  )+
+  #geom_histogram()+
+  scale_fill_manual(values=cbPalette[2:3])+
+  scale_colour_manual(values=cbPalette[2:3])+
+  labs(x="OS probability",y="Density")+
+  facet_wrap(Distribution~Timepoint,ncol=2,scales="free_y",
+             labeller = 
+               label_wrap_gen(multi_line=FALSE),
+             strip.position="top"
+               #labeller()
+             )+
+ # facet_grid(Distribution~Timepoint,scales="free",shrink=TRUE)+
+  theme(legend.position = "bottom",
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+
+
+print(g.s10s20)
+
+
+```
+
+# Importance sampling: model diagnostics, parameter distributions, and survival estimates
+
+The tables and figures in this section show survival curve parameter estimates, covariance structures, importance sampling diagnostics, and (probabilistic) survival curve predictions, obtained from trial data only estimated using maximum likelihood estimation (MLE), and combining trial data with external information using the importance sampling algorithm described in the methods section of the main article and in Appendix 1.
+
+
+
 ## Comparisons of parameter estimates with and without external information 
 
 The below tables compare parameter estimates and covariance matrices obtained from trial data only with those obtained combining trial data with external information, for each of the survival models under consideration. 
@@ -101,16 +229,25 @@ dimnames(is.models[["exponential"]][["orig"]]$cov) <- dimnames(is.models[["expon
 for (dist in dists)
 {
 
-    print(knitr::kable(
+    kable(
       list(is.models[[dist]][["orig"]]$coefficients,is.models[[dist]]$post_mean),
-      caption=paste0("Parameter estimates obtained using trial data only (left) and combining trial data with external information (right): ",distributions[dist]," distribution.")))
+      caption=paste0("Parameter estimates obtained using trial data only (left) and combining trial data with external information (right): ",distributions[dist]," distribution."),
+      booktabs=T) %>%
+    kable_styling(latex_options=c("striped","HOLD_position")) %>%
+    print()
 
+  
   
   cat('\n\n') 
   
-  print(knitr::kable(
+  kable(
     list(is.models[[dist]][["orig"]]$cov, is.models[[dist]]$post_cov),
-    caption=paste0("Covariance matrices obtained using trial data only (left) and combining trial data with external information (right): ",distributions[dist], " distribution.")))
+    caption=paste0("Covariance matrices obtained using trial data only (left) and combining trial data with external information (right): ",distributions[dist], " distribution."),
+    booktabs=TRUE) %>%
+      kable_styling(latex_options=c("striped","HOLD_position")) %>%
+    print()
+
+    
   
 cat('\n\n') 
 }
@@ -162,21 +299,6 @@ for (dist in dists)
 
 ```
 
-## Survival comparison plots 
-
-The below plots show the estimated survival curves (median and 95% confidence intervals) obtained using trial data only and combining trial data with external information, for the survival distributions under consideration. Vertical bars indicate the 95% probability interval for 5 year OS based on external information.
-                                                    
-```{r survplots, results='asis',fig.cap=captions3, dpi=300, fig.height=3.5, fig.width=7}
-
-for (dist in dists)
-{
-plots<-readRDS(paste0("./output/plots_",dist))
-print(plots[[3]])
-# +labs(title=NULL))
-#cat('\\newpage')
-}
-```
-                                                   
 
 
 ## Parameter variability
@@ -201,7 +323,7 @@ cat('\n\n')
 knitr::kable((param.uncertainty),
 caption="Generalised variance of model parameter distributions. Comparison between parameter estimates obtained using trial data only (MLE) and combining trial data with external information (IS).",
 booktabs=TRUE) %>%
-kableExtra::kable_styling(latex_options = "hold_position")
+kableExtra::kable_styling(latex_options = c("HOLD_position","striped"))
 
 ```
 
@@ -322,8 +444,12 @@ Var.Ratio=var.ratio
 ) %>%
 ungroup() %>%
 select(Distribution,expertsurv,IS,Mean.Diff=mean_diff,Var.Ratio)
-knitr::kable(auc.print2,
-caption = "Comparison of probabilistic total area under the curve (mean lifetime OS) estimates, obtained from combining trial data with external information using the importance sampling (IS) method described in the paper, and with the fully Bayesian method of Cooney and White implemented in the expertsurv package. Values shown are probabilstic mean and 95 percent confidence/credible intervals.")
+
+kbl(auc.print2,
+caption = "Comparison of probabilistic total area under the curve (mean lifetime OS) estimates, obtained from combining trial data with external information using the importance sampling (IS) method described in the paper, and with the fully Bayesian method of Cooney and White implemented in the expertsurv package. Values shown are probabilstic mean and 95 percent confidence/credible intervals.",
+booktabs = T
+) %>%
+  kable_styling(latex_options=c("striped","HOLD_position"))
 
 # AUC density plot
 # No truncation of AUC values but truncation of graph
@@ -365,7 +491,9 @@ surv.tstar.long2<-pivot_longer(surv.tstar2,cols=1:2,values_to = "S.tstar") %>% m
 surv.tstar.summary2<-surv.tstar.long2 %>%  group_by(Distribution,Output) %>% summarise(mean=mean(S.tstar), median=median(S.tstar), sd=sd(S.tstar), lwr.95=quantile(S.tstar,0.025), upr.95=quantile(S.tstar,0.975)) %>% ungroup %>% mutate(across(where(is.numeric),~percent(.x,accuracy=0.01)))
 cat('\n\n')
 
-knitr::kable(surv.tstar.summary2, caption = "Comparison of 5-year OS estimates, obtained from combining trial data with external information using the importance sampling (IS) method described in the paper, with the fully Bayesian method of Cooney and White implemented in the expertsurv package.")
+kbl(surv.tstar.summary2, caption = "Comparison of 5-year OS estimates, obtained from combining trial data with external information using the importance sampling (IS) method described in the paper, with the fully Bayesian method of Cooney and White implemented in the expertsurv package.",
+    booktabs=T) %>%
+  kable_styling(latex_options=c("striped","HOLD_position"))
 
 g.ststar2<-ggplot(data=surv.tstar.long2,aes(x=S.tstar,y=Distribution,colour=Output,fill=Output))+ geom_density_ridges(alpha=0.5,scale=1)+scale_fill_manual(values=cbPalette)+scale_colour_manual(values=cbPalette)+labs(x="5-year landmark OS",y="Density")
 cat('\n\n')
@@ -373,3 +501,474 @@ g.ststar2
 cat('\n\n')
 ```
 
+
+
+
+
+# Scenario analysis: alternative specifications of external information
+
+## Description of included scenarios
+
+The base case analysis assumes a prior distribution for 5-year OS given by normal prior with central 95% density contained within the range (20% to 55%); this distribution has mean ```r mu_t ``` and variance ```r sigma_t^2```. We consider five additional scenarios:
+
++ Scenario 1: Alternative specification of base case: Beta distribution with same mean and variance 
++ Scenario 2: Base case variance halved ("more confident"), mean unchanged 
++ Scenario 3: Base case variance doubled ("less confident"), mean unchanged
++ Scenario 4: Base case mean decreased by 20%, variance unchanged, Beta distribution ("wrong with same confidence").
++ Scenario 5: Base case mean decreased by 20%, variance halved, Beta distribution ("wrong and more confident")
++ Scenario 6: Base case mean decreased by 20%, variance doubled, Beta distribution ("wrong and less confident")
+
+
+
+```{r}
+
+# Prior means for each scenario
+mu.ts<-c(mu_t, #BC
+         mu_t, #SCA 1...
+         mu_t,
+         mu_t,
+         mu_t-0.2,
+         mu_t-0.2,
+         mu_t-0.2 #...SCA 6
+         )
+
+# Prior variances
+var.t<-sigma_t^2
+var.ts<-c(1,1,0.5,2,1,0.5,2)*var.t
+
+sigma.ts<-sqrt(var.ts)
+
+
+# Get params of Beta distributions with given mean and var
+estBetaParams <- function(mu, var) {
+  alpha <- ((1 - mu) / var - 1 / mu) * mu ^ 2
+  beta <- alpha * (1 / mu - 1)
+  return(params = list(alpha = alpha, beta = beta))
+}
+
+# Scenarios 1, 4, 5 and 6 use beta priors 
+beta.params<-estBetaParams(mu.ts[c(2,5:7)],var.ts[c(2,5:7)])
+
+# Distrbution summaries
+
+
+
+prior.sca<-data.frame("Distribution"=c("Normal","Beta",rep("Normal",2),rep("Beta",3)),
+                                     "mean"=mu.ts,
+                                      "sd"=sigma.ts,
+                      "Beta.a"=estBetaParams(mu.ts,var.ts)[1],
+                      "Beta.b"=estBetaParams(mu.ts,var.ts)[2]
+                      ) %>%
+  mutate(Beta.a=if_else(Distribution=="Beta",alpha,NA),
+         Beta.b=if_else(Distribution=="Beta",beta,NA),
+         lwr.95=if_else(Distribution=="Beta",
+                        qbeta(0.025,Beta.a,Beta.b),
+                        qnorm(0.025,mean=mean,sd=sd)),
+         upr.95=if_else(Distribution=="Beta",
+                        qbeta(0.975,Beta.a,Beta.b),
+                        qnorm(0.975,mean=mean,sd=sd))
+                     )
+
+
+prior.sca.print<-prior.sca %>%
+  mutate(Scenario=c("Base case", paste0("Scenario ",1:6)),
+         Mean=mean,
+         Variance=sd^2,
+         across(where(is.numeric),~format(.x,digits=3, nsmall=3)),
+         Distribution=if_else(Distribution=="Beta",
+                              paste0("Beta(",Beta.a,",",Beta.b,")"),
+                              paste0("Normal(",mean,",",sd,"^2)")
+                              ),
+         Prior.95CrI=paste0("(",lwr.95," to ", upr.95,")"),
+         Description = c("NA",
+                         "Alternative specification of base case\n using Beta distribution",
+                         "More confident",
+                         "Less confident",
+                         "Wrong with same confidence",
+                         "Wrong and more confident",
+                         "Wrong and less confident")
+         ) %>%
+  select(Scenario,Description,Distribution, Mean, Variance,Prior.95CrI)
+
+kbl(prior.sca.print,
+    digits=3,
+    caption="Summary of external information used in the base case and scenario analysis",
+    booktabs=T
+    )%>%
+  kable_styling(latex_options=c("striped","HOLD_position")) %>%
+  column_spec(2, width = "15em")
+
+
+
+
+```
+
+
+## Results of Scenario analyses:
+
+For all scenarios, we plot posterior mean survival curve estimates, and compare mean lifetime OS and 5-year landmark OS.
+
+```{r}
+
+
+if(file.exists("is.scenarios.sims.RDS")&file.exists("is.scenarios.RDS"))
+   {
+     is.scenarios<-readRDS("is.scenarios.RDS")
+     is.scenarios.sims<-readRDS("is.scenarios.sims.RDS")
+} else{
+
+is.scenarios<-list()
+is.scenarios.sims<-list()
+
+for(i in 1:7){
+  
+  prior.dist<-prior.sca$Distribution[i]
+  
+  prior.loss<-if(prior.dist=="Normal"){
+    function(x){dnorm(x,
+                      mean=prior.sca$mean[i],
+                      sd=prior.sca$sd[i],
+                      log=TRUE)}
+  } else{
+    function(x){dbeta(x,
+                      shape1=prior.sca$Beta.a[i],
+                      shape2=prior.sca$Beta.b[i],
+                      log=TRUE)
+    
+  }}
+  
+  ex.info.sca<-list("tstar"=tstar,
+                  "loss"=prior.loss,
+                  "lower.probs"=prior.sca$lwr.95[i],
+                  "upper.probs"=prior.sca$upr.95[i]
+)
+  
+  is.scenarios[[i]]<-list()
+  is.scenarios.sims[[i]]<-list()
+  
+  for(dist in dists){
+  
+  old.params<-mle.sims[[dist]]
+   # Model fits for later
+  fit<-is_surv(
+    coeff=old.params$coeff,
+    cov=old.params$cov,
+    dist=dist,
+    ex_info=ex.info.sca
+  )
+  
+  is.scenarios[[i]][[dist]]<-fit
+  is.scenarios.sims[[i]][[dist]]<-get_sims(dist=dist,coeff=fit$post_mean,cov=fit$post_cov,tmax=t.max)
+  rm(old.params,fit)
+  
+}
+}
+saveRDS(is.scenarios,file="is.scenarios.RDS")
+saveRDS(is.scenarios.sims,file="is.scenarios.sims.RDS")
+}
+```
+
+
+
+
+```{r}
+# Data frames of simulations
+
+#Number of scenarios incl. base case 
+n.sca<-nrow(prior.sca)
+
+#AUC
+sims.auc<-data.frame(matrix(NA,nrow=5000,ncol=n.sca*6))
+names(sims.auc)<-paste0(c(rep("BC_",6),paste0(rep("SCA",(n.sca-1)*6),rep(1:(n.sca-1),each=6),"_")),
+                          rep(dists,n.sca))
+# 5 year OS
+sims.ststar<-sims.auc
+
+# Extract the simulations
+for(i in 1:n.sca){
+for(j in seq_along(dists))
+{
+sims.auc[,(i-1)*6+j]<-is.scenarios.sims[[i]][[dists[j]]][["AUC"]]
+sims.ststar[,(i-1)*6+j]<-is.scenarios.sims[[i]][[dists[j]]][["s.tstar"]]
+}
+}
+
+names(sims.auc)<-paste0(names(sims.auc),"_AUC")
+names(sims.ststar)<-paste0(names(sims.ststar),"_STSTAR")
+
+sca.sims<-cbind(sims.auc,sims.ststar)
+
+
+sca.longsims<-sca.sims%>%
+  pivot_longer(1:84,
+               names_to="name",
+               values_to="value")%>%
+  separate_wider_delim(name,delim="_",names=c("Scenario","Distribution","Variable"))
+
+# For later use with ggplot - full distribution and scenario names
+sca.longsims2<-sca.longsims%>%
+    mutate(Distribution=str_replace_all(Distribution,distributions),
+         Scenario=str_replace_all(Scenario,"SCA","Scenario "),
+         Scenario=str_replace_all(Scenario,"BC","Base case "))
+
+# Create summary stats
+sca.summary<-sca.longsims%>%
+  group_by(Scenario,Distribution,Variable) %>%
+  summarise(mean=mean(value),
+            sd=sd(value),
+            median=median(value),
+            lwr.95=quantile(value,0.025),
+            upr.95=quantile(value,0.975))%>%
+  ungroup()%>%
+  mutate(across(where(is.character),str_trim))
+
+# Calculate differences versus BC
+
+sca.diffs<-sca.summary %>%
+  #mutate(Scenario=str_replace_all(Scenario," ",""))%>%
+  select(Distribution, Scenario, Variable, mean, sd) %>%
+  pivot_wider(names_from=Scenario,
+              values_from=4:5)%>%
+  mutate(across(mean_SCA1:mean_SCA6,~.x-mean_BC,.names = "mean.diff_{.col}"),
+         across(sd_SCA1:sd_SCA6,~(.x/sd_BC)^2,.names="var.ratio_{.col}")
+         ) %>%
+  select(Distribution,Variable,contains(c("diff","ratio")))%>%
+  rename_with(~gsub("_sd|_mean","",.x)) %>%
+  pivot_longer(3:14,names_to = "name",values_to = "value") %>%
+  separate_wider_delim(name,delim="_",names=c("Stat","Scenario"))%>%
+ # mutate(Scenario=gsub("o","o ",Scenario),
+ #        Distribution=str_trim(Distribution)) %>%
+  pivot_wider(names_from = Stat,values_from = value)
+
+# Merge with summary table
+
+sca.summary<-sca.summary %>%
+    full_join(sca.diffs,by=join_by(Distribution,Scenario,Variable)) %>%
+  mutate(Distribution=str_replace_all(Distribution,distributions),
+         Scenario=str_replace_all(Scenario,"SCA","Scenario "),
+         Scenario=str_replace_all(Scenario,"BC","Base case ")
+         )
+  
+
+```
+
+
+
+```{r,fig.dim=c(7,9), fig.cap="Survival curves (posterior median) for the base case and scenarios 1 through 6",dpi=300}
+
+# Get posterior median survival time estimates
+sca.ests<-list()
+for(i in 1:n.sca){
+  sca.ests[[i]]<-data.frame(matrix(NA,nrow=length(tseq2),ncol=7))
+  names(sca.ests[[i]])<-c("time",dists)
+  sca.ests[[i]]$time<-tseq2
+  
+for(j in seq_along(dists))
+{
+  
+  sca.ests[[i]][,dists[j]]<-is.scenarios.sims[[i]][[dists[j]]][["survsummary"]]$S_median
+}
+}
+names(sca.ests)<-c("BC",paste0("SCA_",1:6))
+
+# Reshape for plotting
+#
+sc.names<-c("Base Case",
+            paste0("Scenario ",1:6)
+            )
+names(sc.names)<-c("BC",
+                   paste0("SCA_",1:6))
+
+sca.ests.all<-bind_rows(sca.ests,.id="id") %>%
+  pivot_longer(3:8,
+               names_to="dist",
+               values_to="St") %>%
+  mutate(Scenario=str_replace_all(id,sc.names),
+         Distribution=str_replace_all(dist,distributions))
+  
+
+ggplot(data=sca.ests.all,aes(x=time,y=St,colour=Scenario))+
+  geom_line(lwd=1)+
+  facet_wrap(.~Distribution,ncol=2)+
+  theme(legend.position = "bottom")+
+  ylab("S(t)")
+
+
+```
+
+
+
+
+
+
+```{r}
+
+cat('\n\n')
+
+auc.summary<-sca.summary %>%
+  filter(Variable=="AUC") %>%
+  arrange(Distribution) %>%
+  mutate(across(where(is.numeric),~format(round(.x,2),nsmall=2)),
+         CrI.95 = paste0("(",lwr.95,", ",upr.95,")")
+         ) %>%
+  select(Distribution,Scenario,Mean=mean,Median=median,CrI.95,Mean.Difference=mean.diff,Variance.Ratio=var.ratio)
+
+kbl(auc.summary,
+    caption="Mean OS for Scenarios 1 through 5, including comparisons with base case (probabilistic mean difference and variance ratio)",
+    booktabs=T
+    )%>%
+  kable_styling(latex_options="striped") %>%
+  add_header_above(c(" "=5,"Scenario versus Base Case"=2))
+
+#knitr::kable(auc.summary,caption="Mean OS for Scenarios 1 through 5, including comparisons with base case (probabilistic mean difference and variance ratio)")
+
+cat('\n\n')
+
+```
+
+```{r, fig.dim=c(7,9), fig.cap="Boxplots of probabilistic simulations of mean OS in the Base Case and in Scenarios 1 through 5.",dpi=300}
+
+# IN USE
+
+
+g.auc<-ggplot(data=filter(sca.longsims2,Variable=="AUC"),aes(y=value,x=Scenario,fill=Scenario))+
+  geom_boxplot(outliers=FALSE)+
+  facet_wrap(.~Distribution,ncol=2,scales="free_y")+
+  labs(y="AUC (Mean lifetime OS, Months)")+
+  theme(legend.position = "none",
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        axis.title.x = element_blank())
+  
+g.auc
+
+cat('\n\n')
+
+```
+
+
+```{r}
+
+s5.summary<-sca.summary %>%
+  filter(Variable=="STSTAR") %>%
+  arrange(Distribution) %>%
+  mutate(across(where(is.numeric),~format(round(.x,2),nsmall=2)),
+         CrI.95 = paste0("(",lwr.95,", ",upr.95,")")
+         ) %>%
+  select(Distribution,Scenario,Mean=mean,Median=median,CrI.95,Mean.Difference=mean.diff,Variance.Ratio=var.ratio)
+
+kbl(s5.summary,
+    caption="Summary of probabilistic estimates of 5-year OS for the base case and Scenarios 1 through 5, including comparisons between each scenario and the base case (probabilistic mean difference and variance ratio)",
+    booktabs=T
+    )%>%
+  kable_styling(latex_options="striped")%>%
+  add_header_above(c(" "=5,"Scenario versus Base Case"=2))
+
+cat('\n\n')
+
+```
+
+```{r, fig.dim=c(7,9),fig.cap="Boxplots of probabilistic simulations of 5-year OS in the Base Case and in Scenarios 1 through 5.",dpi=150}
+
+# IN USE
+
+g.s5<-ggplot(data=filter(sca.longsims2,Variable=="STSTAR"),aes(y=value,x=Scenario,fill=Scenario))+
+  geom_boxplot(outliers=FALSE)+
+  facet_wrap(.~Distribution,ncol=2,scales="free_y")+
+  labs(y="5-year survival probabilities")+
+  theme(legend.position = "none",
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        axis.title.x = element_blank())
+  
+g.s5
+
+
+cat('\n\n')
+```
+
+
+# Assessment of multivariate normal approximation of joint parameter distributions
+
+```{r}
+
+### Compute 5-year OS and mean OS using weighted samples from IS method
+
+wt.summary<-data.frame()
+
+for(dist in dists)
+{
+  # Extract parameter sims and weights
+  raw.samples<-is.models[[dist]]$raw_samples_nat
+  raw.samples.mvn<-is.models[[dist]]$raw_samples_mvn
+  sample.weights<-is.models[[dist]]$sample_weights
+  
+  # Predict survival
+  # From raw samples
+  st.raw<- data.frame("S.tstar"=s_fun(t=tstar,dist=dist,trans_pars = raw.samples),
+                      "S.mean"=get_auc(params=raw.samples.mvn,dist=dist,lwr=0,upr = t.max),
+                      "Method"="Samples",
+                      "Weight"=sample.weights,
+                      "Distribution"=dist)
+  
+  # From summary MVN distribution
+  st.mvn<-data.frame("S.tstar"=unname(is.sims[[dist]][["s.tstar"]]),
+                     "S.mean"=is.sims[[dist]][["AUC"]],
+                     "Method"="MVN",
+                     "Weight"=1,
+                     "Distribution"=dist)
+ 
+   # Combine into existing datafram
+  
+  wt.summary<-rbind.data.frame(wt.summary,st.raw,st.mvn)
+  
+}
+
+
+##Summarise
+wt.summary.long<-wt.summary %>% 
+  pivot_longer(1:2) %>% 
+  mutate(Distribution=str_replace_all(Distribution,distributions),
+         name=str_replace_all(name,c("S.mean"="Mean OS (months)","S.tstar"="5-year OS (prob.)")))
+
+wt.summary.long%>%
+  group_by(Distribution,name,Method) %>%
+  summarise(mean=weighted.mean(value,w=Weight),
+            median=wtd.quantile(value,weights=Weight,probs=0.5),
+            lwr.95=wtd.quantile(value,weights=Weight,probs=0.025),
+            upr.95=wtd.quantile(value,weights=Weight,probs=0.975)
+            ) %>%
+  ungroup() %>%
+  mutate(across(where(is.numeric),~format(.x,digits=2,nsmall=2)),
+         Post.95CrI = paste0("(",lwr.95," to ",upr.95,")")
+         ) %>%
+  select(-lwr.95,-upr.95) %>%
+  pivot_wider(values_from=mean:Post.95CrI,names_from = Method,names_sep=".") %>%
+  mutate()%>%
+  select(Distribution,Output=name,mean.MVN,median.MVN,Post.95CrI.MVN,mean.Samples,median.Samples,Post.95CrI.Samples) %>%
+  kbl(booktabs=T,
+      col.names=c("Distribution","Output","Mean","Median","95% CrI","Mean","Median","95% CrI"),
+      caption = "Comparison of probabilistic estimates Mean OS (months) and 5-year OS probabilities using the multivariate normal approximation and the weighted samples obtained from the importance sampling algorithm") %>%
+  kable_styling(latex_options=c("striped","HOLD_position")) %>%
+  add_header_above(c(" "=2,
+                     "MVN approximation"=3,
+                     "Weighted Samples"=3
+                     ))
+  
+  
+```
+
+
+
+```{r, fig.cap="Boxplots of probabilistic simulations of Mean OS (months) and 5-year OS probabilities using the multivariate normal approximation and the weighted samples obtained from the importance sampling algorithm.",dpi=300}
+  
+## Boxplot
+
+ggplot(data=wt.summary.long,aes(y=value,x=Distribution,fill = Method,weight=Weight))+
+  geom_boxplot(outliers=FALSE)+
+  facet_wrap(.~name,ncol=2,scales="free_y")+
+    theme(legend.position = "bottom",
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        axis.title.x = element_blank(),
+        axis.title.y=element_blank())
+
+
+```

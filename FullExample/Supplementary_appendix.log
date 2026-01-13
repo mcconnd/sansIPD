@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.9.21)  22 SEP 2025 12:04
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.9.21)  13 JAN 2026 15:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -22,30 +22,70 @@ File: size10.clo 2025/01/22 v1.4n Standard LaTeX file (size option)
 \abovecaptionskip=\skip49
 \belowcaptionskip=\skip50
 \bibindent=\dimen148
+) (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2024/09/29 v3.02 LaTeX color extensions (UK)
+(c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: pdftex.def on input line 274.
+(c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2025/09/29 v1.2d Graphics/color driver for pdftex
+) (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/mathcolor.ltx)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1349.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1353.
+Package xcolor Info: Model `RGB' extended on input line 1365.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1367.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1370.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1371.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1372.
+) (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+(c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
+\KV@toks@=\toks17
+) (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+(c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2024/12/12 v1.0g TeX engine tests
+))
+\Gm@cnth=\count283
+\Gm@cntv=\count284
+\c@Gm@tempcnt=\count285
+\Gm@bindingoffset=\dimen149
+\Gm@wd@mp=\dimen150
+\Gm@odd@mp=\dimen151
+\Gm@even@mp=\dimen152
+\Gm@layoutwidth=\dimen153
+\Gm@layoutheight=\dimen154
+\Gm@layouthoffset=\dimen155
+\Gm@layoutvoffset=\dimen156
+\Gm@dimlist=\toks18
 ) (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
-Package: amsmath 2025/06/16 v2.17y AMS math features
+Package: amsmath 2025/07/09 v2.17z AMS math features
 \@mathmargin=\skip51
 For additional information on amsmath, use the `?' option.
 (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amstext.sty
 Package: amstext 2024/11/17 v2.01 AMS text
 (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
-\@emptytoks=\toks17
-\ex@=\dimen149
+\@emptytoks=\toks19
+\ex@=\dimen157
 )) (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
-\pmbraise@=\dimen150
+\pmbraise@=\dimen158
 ) (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 2022/04/08 v2.04 operator names
 )
-\inf@bad=\count283
+\inf@bad=\count286
 LaTeX Info: Redefining \frac on input line 233.
-\uproot@=\count284
-\leftroot@=\count285
+\uproot@=\count287
+\leftroot@=\count288
 LaTeX Info: Redefining \overline on input line 398.
 LaTeX Info: Redefining \colon on input line 409.
-\classnum@=\count286
-\DOTSCASE@=\count287
+\classnum@=\count289
+\DOTSCASE@=\count290
 LaTeX Info: Redefining \ldots on input line 495.
 LaTeX Info: Redefining \dots on input line 498.
 LaTeX Info: Redefining \cdots on input line 619.
@@ -55,36 +95,36 @@ LaTeX Info: Redefining \big on input line 721.
 LaTeX Info: Redefining \Big on input line 722.
 LaTeX Info: Redefining \bigg on input line 723.
 LaTeX Info: Redefining \Bigg on input line 724.
-\big@size=\dimen151
+\big@size=\dimen159
 LaTeX Font Info:    Redeclaring font encoding OML on input line 742.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 743.
-\macc@depth=\count288
+\macc@depth=\count291
 LaTeX Info: Redefining \bmod on input line 904.
 LaTeX Info: Redefining \pmod on input line 909.
 LaTeX Info: Redefining \smash on input line 939.
 LaTeX Info: Redefining \relbar on input line 969.
 LaTeX Info: Redefining \Relbar on input line 970.
-\c@MaxMatrixCols=\count289
+\c@MaxMatrixCols=\count292
 \dotsspace@=\muskip17
-\c@parentequation=\count290
-\dspbrk@lvl=\count291
-\tag@help=\toks18
-\row@=\count292
-\column@=\count293
-\maxfields@=\count294
-\andhelp@=\toks19
-\eqnshift@=\dimen152
-\alignsep@=\dimen153
-\tagshift@=\dimen154
-\tagwidth@=\dimen155
-\totwidth@=\dimen156
-\lineht@=\dimen157
-\@envbody=\toks20
+\c@parentequation=\count293
+\dspbrk@lvl=\count294
+\tag@help=\toks20
+\row@=\count295
+\column@=\count296
+\maxfields@=\count297
+\andhelp@=\toks21
+\eqnshift@=\dimen160
+\alignsep@=\dimen161
+\tagshift@=\dimen162
+\tagwidth@=\dimen163
+\totwidth@=\dimen164
+\lineht@=\dimen165
+\@envbody=\toks22
 \multlinegap=\skip52
 \multlinetaggap=\skip53
-\mathdisplay@stack=\toks21
-LaTeX Info: Redefining \[ on input line 2949.
-LaTeX Info: Redefining \] on input line 2950.
+\mathdisplay@stack=\toks23
+LaTeX Info: Redefining \[ on input line 2950.
+LaTeX Info: Redefining \] on input line 2951.
 ) (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/amssymb.sty
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
 (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/amsfonts.sty
@@ -94,14 +134,12 @@ Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
-)) (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
-Package: iftex 2024/12/12 v1.0g TeX engine tests
-) (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty
-Package: fontenc 2024/12/21 v2.1c Standard LaTeX package
+)) (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty
+Package: fontenc 2025/07/18 v2.1d Standard LaTeX package
 ) (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2024/02/08 v1.3d Input encoding file
-\inpenc@prehook=\toks22
-\inpenc@posthook=\toks23
+\inpenc@prehook=\toks24
+\inpenc@posthook=\toks25
 ) (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/textcomp.sty
 Package: textcomp 2024/04/24 v2.1b Standard LaTeX package
 ) (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/lmodern.sty
@@ -138,46 +176,8 @@ LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
 (Font)                  OT1/cmr/bx/it --> OT1/lmr/bx/it on input line 37.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 (Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 38.
-) (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/xcolor/xcolor.sty
-Package: xcolor 2024/09/29 v3.02 LaTeX color extensions (UK)
-(c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg
-File: color.cfg 2016/01/02 v1.6 sample color configuration
-)
-Package xcolor Info: Driver file: pdftex.def on input line 274.
-(c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex.def
-File: pdftex.def 2024/04/13 v1.2c Graphics/color driver for pdftex
-) (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/mathcolor.ltx)
-Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1349.
-Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1353.
-Package xcolor Info: Model `RGB' extended on input line 1365.
-Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1367.
-Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1368.
-Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1369.
-Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1370.
-Package xcolor Info: Model `Gray' substituted by `gray' on input line 1371.
-Package xcolor Info: Model `wave' substituted by `hsb' on input line 1372.
-) (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/geometry/geometry.sty
-Package: geometry 2020/01/02 v5.9 Page Geometry
-(c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/keyval.sty
-Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
-\KV@toks@=\toks24
-) (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/ifvtex.sty
-Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
-)
-\Gm@cnth=\count295
-\Gm@cntv=\count296
-\c@Gm@tempcnt=\count297
-\Gm@bindingoffset=\dimen158
-\Gm@wd@mp=\dimen159
-\Gm@odd@mp=\dimen160
-\Gm@even@mp=\dimen161
-\Gm@layoutwidth=\dimen162
-\Gm@layoutheight=\dimen163
-\Gm@layouthoffset=\dimen164
-\Gm@layoutvoffset=\dimen165
-\Gm@dimlist=\toks25
 ) (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty
-Package: longtable 2024-12-18 v4.23 Multi-page Table package (DPC)
+Package: longtable 2025-10-13 v4.24 Multi-page Table package (DPC)
 \LTleft=\skip54
 \LTright=\skip55
 \LTpre=\skip56
@@ -214,7 +214,7 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \@lastruleclass=\count306
 \@thisrulewidth=\dimen179
 ) (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/array.sty
-Package: array 2025/06/08 v2.6j Tabular extension package (FMi)
+Package: array 2025/09/25 v2.6n Tabular extension package (FMi)
 \col@sep=\dimen180
 \ar@mcellbox=\box60
 \extrarowheight=\dimen181
@@ -235,7 +235,7 @@ LaTeX Info: Redefining \addtolength on input line 87.
 \calc@Ccount=\count309
 \calc@Cskip=\skip62
 ) (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/etoolbox/etoolbox.sty
-Package: etoolbox 2025/02/11 v2.5l e-TeX tools for LaTeX (JAW)
+Package: etoolbox 2025/10/02 v2.5m e-TeX tools for LaTeX (JAW)
 \etb@tempcnta=\count310
 ) (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/mdwtools/footnote.sty
 Package: footnote 1997/01/28 1.13 Save footnotes around boxes
@@ -450,11 +450,11 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 28
 File: bkm-pdftex.def 2023-12-10 v1.31 bookmark driver for pdfTeX and luaTeX (HO)
 \BKM@id=\count335
 ))
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 95.
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 94.
 (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
-File: l3backend-pdftex.def 2025-06-09 L3 backend support: PDF output (pdfTeX)
+File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count336
 ) (./Supplementary_appendix.aux
 
@@ -493,24 +493,24 @@ LaTeX Warning: Label `tab:paramcomp' multiply defined.
 )
 \openout1 = `Supplementary_appendix.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 95.
-LaTeX Font Info:    ... okay on input line 95.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 95.
-LaTeX Font Info:    ... okay on input line 95.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 95.
-LaTeX Font Info:    ... okay on input line 95.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 95.
-LaTeX Font Info:    ... okay on input line 95.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 95.
-LaTeX Font Info:    ... okay on input line 95.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 95.
-LaTeX Font Info:    ... okay on input line 95.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 95.
-LaTeX Font Info:    ... okay on input line 95.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 95.
-LaTeX Font Info:    ... okay on input line 95.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 95.
-LaTeX Font Info:    ... okay on input line 95.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 94.
+LaTeX Font Info:    ... okay on input line 94.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 94.
+LaTeX Font Info:    ... okay on input line 94.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 94.
+LaTeX Font Info:    ... okay on input line 94.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 94.
+LaTeX Font Info:    ... okay on input line 94.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 94.
+LaTeX Font Info:    ... okay on input line 94.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 94.
+LaTeX Font Info:    ... okay on input line 94.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 94.
+LaTeX Font Info:    ... okay on input line 94.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 94.
+LaTeX Font Info:    ... okay on input line 94.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 94.
+LaTeX Font Info:    ... okay on input line 94.
 (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
@@ -551,371 +551,465 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring OFF on input line 95.
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 97.
+Package hyperref Info: Link coloring OFF on input line 94.
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 96.
 (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 97.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 96.
 (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 97.
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 96.
 (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 97.
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 96.
 (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 97.
+(Font)              <12> on input line 96.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 97.
+(Font)              <8> on input line 96.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 97.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 97.
+(Font)              <6> on input line 96.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 96.
 (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 97.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 96.
 (c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (./Supplementary_appendix.toc
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 2.
+(Font)              <10> on input line 4.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 2.
+(Font)              <7> on input line 4.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 2.
+(Font)              <5> on input line 4.
 )
 \tf@toc=\write3
 \openout3 = `Supplementary_appendix.toc'.
 
-<Supplementary_appendix_files/figure-latex/ESSplots-1.png, id=15, 433.62pt x 252.945pt>
-File: Supplementary_appendix_files/figure-latex/ESSplots-1.png Graphic file (type png)
-<use Supplementary_appendix_files/figure-latex/ESSplots-1.png>
-Package pdftex.def Info: Supplementary_appendix_files/figure-latex/ESSplots-1.png  used on input line 415.
-(pdftex.def)             Requested size: 433.61894pt x 252.94438pt.
-<Supplementary_appendix_files/figure-latex/ESSplots-2.png, id=16, 433.62pt x 252.945pt>
-File: Supplementary_appendix_files/figure-latex/ESSplots-2.png Graphic file (type png)
-<use Supplementary_appendix_files/figure-latex/ESSplots-2.png>
-Package pdftex.def Info: Supplementary_appendix_files/figure-latex/ESSplots-2.png  used on input line 418.
-(pdftex.def)             Requested size: 433.61894pt x 252.94438pt.
+<Supplementary_appendix_files/figure-latex/survplots-1.png, id=20, 505.89pt x 252.945pt>
+File: Supplementary_appendix_files/figure-latex/survplots-1.png Graphic file (type png)
+<use Supplementary_appendix_files/figure-latex/survplots-1.png>
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/survplots-1.png  used on input line 106.
+(pdftex.def)             Requested size: 505.88875pt x 252.94438pt.
+
+Overfull \hbox (5.40475pt too wide) in paragraph at lines 106--106
+[][] 
+ []
+
+<Supplementary_appendix_files/figure-latex/survplots-2.png, id=21, 505.89pt x 252.945pt>
+File: Supplementary_appendix_files/figure-latex/survplots-2.png Graphic file (type png)
+<use Supplementary_appendix_files/figure-latex/survplots-2.png>
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/survplots-2.png  used on input line 109.
+(pdftex.def)             Requested size: 505.88875pt x 252.94438pt.
+
+Overfull \hbox (5.40475pt too wide) in paragraph at lines 109--109
+[][] 
+ []
+
 
 
 [1
 
 {c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}]
-
-[2]
-
-[3]
-<Supplementary_appendix_files/figure-latex/ESSplots-3.png, id=58, 433.62pt x 252.945pt>
-File: Supplementary_appendix_files/figure-latex/ESSplots-3.png Graphic file (type png)
-<use Supplementary_appendix_files/figure-latex/ESSplots-3.png>
-Package pdftex.def Info: Supplementary_appendix_files/figure-latex/ESSplots-3.png  used on input line 421.
-(pdftex.def)             Requested size: 433.61894pt x 252.94438pt.
-<Supplementary_appendix_files/figure-latex/ESSplots-4.png, id=59, 433.62pt x 252.945pt>
-File: Supplementary_appendix_files/figure-latex/ESSplots-4.png Graphic file (type png)
-<use Supplementary_appendix_files/figure-latex/ESSplots-4.png>
-Package pdftex.def Info: Supplementary_appendix_files/figure-latex/ESSplots-4.png  used on input line 424.
-(pdftex.def)             Requested size: 433.61894pt x 252.94438pt.
-
-
-[4 <./Supplementary_appendix_files/figure-latex/ESSplots-1.png> <./Supplementary_appendix_files/figure-latex/ESSplots-2.png>]
-<Supplementary_appendix_files/figure-latex/ESSplots-5.png, id=68, 433.62pt x 252.945pt>
-File: Supplementary_appendix_files/figure-latex/ESSplots-5.png Graphic file (type png)
-<use Supplementary_appendix_files/figure-latex/ESSplots-5.png>
-Package pdftex.def Info: Supplementary_appendix_files/figure-latex/ESSplots-5.png  used on input line 427.
-(pdftex.def)             Requested size: 433.61894pt x 252.94438pt.
-<Supplementary_appendix_files/figure-latex/ESSplots-6.png, id=69, 433.62pt x 252.945pt>
-File: Supplementary_appendix_files/figure-latex/ESSplots-6.png Graphic file (type png)
-<use Supplementary_appendix_files/figure-latex/ESSplots-6.png>
-Package pdftex.def Info: Supplementary_appendix_files/figure-latex/ESSplots-6.png  used on input line 430.
-(pdftex.def)             Requested size: 433.61894pt x 252.94438pt.
-
-
-[5 <./Supplementary_appendix_files/figure-latex/ESSplots-3.png> <./Supplementary_appendix_files/figure-latex/ESSplots-4.png>]
-<Supplementary_appendix_files/figure-latex/distplots-1.png, id=78, 505.89pt x 289.08pt>
-File: Supplementary_appendix_files/figure-latex/distplots-1.png Graphic file (type png)
-<use Supplementary_appendix_files/figure-latex/distplots-1.png>
-Package pdftex.def Info: Supplementary_appendix_files/figure-latex/distplots-1.png  used on input line 438.
-(pdftex.def)             Requested size: 505.88875pt x 289.07928pt.
-
-Overfull \hbox (5.40475pt too wide) in paragraph at lines 438--438
-[][] 
- []
-
-
-
-[6 <./Supplementary_appendix_files/figure-latex/ESSplots-5.png> <./Supplementary_appendix_files/figure-latex/ESSplots-6.png>]
-<Supplementary_appendix_files/figure-latex/distplots-2.png, id=87, 505.89pt x 289.08pt>
-File: Supplementary_appendix_files/figure-latex/distplots-2.png Graphic file (type png)
-<use Supplementary_appendix_files/figure-latex/distplots-2.png>
-Package pdftex.def Info: Supplementary_appendix_files/figure-latex/distplots-2.png  used on input line 442.
-(pdftex.def)             Requested size: 505.88875pt x 289.07928pt.
-
-Overfull \hbox (5.40475pt too wide) in paragraph at lines 442--442
-[][] 
- []
-
-
-
-[7 <./Supplementary_appendix_files/figure-latex/distplots-1.png>]
-<Supplementary_appendix_files/figure-latex/distplots-3.png, id=95, 505.89pt x 289.08pt>
-File: Supplementary_appendix_files/figure-latex/distplots-3.png Graphic file (type png)
-<use Supplementary_appendix_files/figure-latex/distplots-3.png>
-Package pdftex.def Info: Supplementary_appendix_files/figure-latex/distplots-3.png  used on input line 446.
-(pdftex.def)             Requested size: 505.88875pt x 289.07928pt.
-
-Overfull \hbox (5.40475pt too wide) in paragraph at lines 446--446
-[][] 
- []
-
-<Supplementary_appendix_files/figure-latex/distplots-4.png, id=96, 505.89pt x 289.08pt>
-File: Supplementary_appendix_files/figure-latex/distplots-4.png Graphic file (type png)
-<use Supplementary_appendix_files/figure-latex/distplots-4.png>
-Package pdftex.def Info: Supplementary_appendix_files/figure-latex/distplots-4.png  used on input line 450.
-(pdftex.def)             Requested size: 505.88875pt x 289.07928pt.
-
-Overfull \hbox (5.40475pt too wide) in paragraph at lines 450--450
-[][] 
- []
-
-
-
-[8 <./Supplementary_appendix_files/figure-latex/distplots-2.png (PNG copy)> <./Supplementary_appendix_files/figure-latex/distplots-3.png (PNG copy)>]
-<Supplementary_appendix_files/figure-latex/distplots-5.png, id=103, 505.89pt x 289.08pt>
-File: Supplementary_appendix_files/figure-latex/distplots-5.png Graphic file (type png)
-<use Supplementary_appendix_files/figure-latex/distplots-5.png>
-Package pdftex.def Info: Supplementary_appendix_files/figure-latex/distplots-5.png  used on input line 454.
-(pdftex.def)             Requested size: 505.88875pt x 289.07928pt.
-
-Overfull \hbox (5.40475pt too wide) in paragraph at lines 454--454
-[][] 
- []
-
-<Supplementary_appendix_files/figure-latex/distplots-6.png, id=104, 505.89pt x 289.08pt>
-File: Supplementary_appendix_files/figure-latex/distplots-6.png Graphic file (type png)
-<use Supplementary_appendix_files/figure-latex/distplots-6.png>
-Package pdftex.def Info: Supplementary_appendix_files/figure-latex/distplots-6.png  used on input line 458.
-(pdftex.def)             Requested size: 505.88875pt x 289.07928pt.
-
-Overfull \hbox (5.40475pt too wide) in paragraph at lines 458--458
-[][] 
- []
-
-
-
-[9 <./Supplementary_appendix_files/figure-latex/distplots-4.png (PNG copy)> <./Supplementary_appendix_files/figure-latex/distplots-5.png (PNG copy)>]
-<Supplementary_appendix_files/figure-latex/survplots-1.png, id=111, 505.89pt x 252.945pt>
-File: Supplementary_appendix_files/figure-latex/survplots-1.png Graphic file (type png)
-<use Supplementary_appendix_files/figure-latex/survplots-1.png>
-Package pdftex.def Info: Supplementary_appendix_files/figure-latex/survplots-1.png  used on input line 466.
-(pdftex.def)             Requested size: 505.88875pt x 252.94438pt.
-
-Overfull \hbox (5.40475pt too wide) in paragraph at lines 466--466
-[][] 
- []
-
-<Supplementary_appendix_files/figure-latex/survplots-2.png, id=112, 505.89pt x 252.945pt>
-File: Supplementary_appendix_files/figure-latex/survplots-2.png Graphic file (type png)
-<use Supplementary_appendix_files/figure-latex/survplots-2.png>
-Package pdftex.def Info: Supplementary_appendix_files/figure-latex/survplots-2.png  used on input line 469.
-(pdftex.def)             Requested size: 505.88875pt x 252.94438pt.
-
-Overfull \hbox (5.40475pt too wide) in paragraph at lines 469--469
-[][] 
- []
-
-
-
-[10 <./Supplementary_appendix_files/figure-latex/distplots-6.png (PNG copy)>]
-<Supplementary_appendix_files/figure-latex/survplots-3.png, id=118, 505.89pt x 252.945pt>
+<Supplementary_appendix_files/figure-latex/survplots-3.png, id=48, 505.89pt x 252.945pt>
 File: Supplementary_appendix_files/figure-latex/survplots-3.png Graphic file (type png)
 <use Supplementary_appendix_files/figure-latex/survplots-3.png>
-Package pdftex.def Info: Supplementary_appendix_files/figure-latex/survplots-3.png  used on input line 472.
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/survplots-3.png  used on input line 112.
 (pdftex.def)             Requested size: 505.88875pt x 252.94438pt.
 
-Overfull \hbox (5.40475pt too wide) in paragraph at lines 472--472
+Overfull \hbox (5.40475pt too wide) in paragraph at lines 112--112
 [][] 
  []
 
-<Supplementary_appendix_files/figure-latex/survplots-4.png, id=119, 505.89pt x 252.945pt>
+<Supplementary_appendix_files/figure-latex/survplots-4.png, id=49, 505.89pt x 252.945pt>
 File: Supplementary_appendix_files/figure-latex/survplots-4.png Graphic file (type png)
 <use Supplementary_appendix_files/figure-latex/survplots-4.png>
-Package pdftex.def Info: Supplementary_appendix_files/figure-latex/survplots-4.png  used on input line 475.
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/survplots-4.png  used on input line 115.
 (pdftex.def)             Requested size: 505.88875pt x 252.94438pt.
 
-Overfull \hbox (5.40475pt too wide) in paragraph at lines 475--475
+Overfull \hbox (5.40475pt too wide) in paragraph at lines 115--115
 [][] 
  []
 
 
 
-[11 <./Supplementary_appendix_files/figure-latex/survplots-1.png> <./Supplementary_appendix_files/figure-latex/survplots-2.png>]
-<Supplementary_appendix_files/figure-latex/survplots-5.png, id=128, 505.89pt x 252.945pt>
+[2 <./Supplementary_appendix_files/figure-latex/survplots-1.png> <./Supplementary_appendix_files/figure-latex/survplots-2.png>]
+<Supplementary_appendix_files/figure-latex/survplots-5.png, id=58, 505.89pt x 252.945pt>
 File: Supplementary_appendix_files/figure-latex/survplots-5.png Graphic file (type png)
 <use Supplementary_appendix_files/figure-latex/survplots-5.png>
-Package pdftex.def Info: Supplementary_appendix_files/figure-latex/survplots-5.png  used on input line 478.
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/survplots-5.png  used on input line 118.
 (pdftex.def)             Requested size: 505.88875pt x 252.94438pt.
+
+Overfull \hbox (5.40475pt too wide) in paragraph at lines 118--118
+[][] 
+ []
+
+<Supplementary_appendix_files/figure-latex/survplots-6.png, id=59, 505.89pt x 252.945pt>
+File: Supplementary_appendix_files/figure-latex/survplots-6.png Graphic file (type png)
+<use Supplementary_appendix_files/figure-latex/survplots-6.png>
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/survplots-6.png  used on input line 121.
+(pdftex.def)             Requested size: 505.88875pt x 252.94438pt.
+
+Overfull \hbox (5.40475pt too wide) in paragraph at lines 121--121
+[][] 
+ []
+
+
+
+[3 <./Supplementary_appendix_files/figure-latex/survplots-3.png> <./Supplementary_appendix_files/figure-latex/survplots-4.png>]
+Overfull \hbox (49.12717pt too wide) in paragraph at lines 130--152
+ [][] 
+ []
+
+
+
+[4 <./Supplementary_appendix_files/figure-latex/survplots-5.png> <./Supplementary_appendix_files/figure-latex/survplots-6.png>]
+<Supplementary_appendix_files/figure-latex/unnamed-chunk-2-1.png, id=76, 505.89pt x 650.43pt>
+File: Supplementary_appendix_files/figure-latex/unnamed-chunk-2-1.png Graphic file (type png)
+<use Supplementary_appendix_files/figure-latex/unnamed-chunk-2-1.png>
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/unnamed-chunk-2-1.png  used on input line 155.
+(pdftex.def)             Requested size: 505.88875pt x 650.4284pt.
+
+Overfull \hbox (5.40475pt too wide) in paragraph at lines 155--155
+[][] 
+ []
+
+
+
+[5]
+Overfull \vbox (5.21385pt too high) has occurred while \output is active []
+
+
+
+[6 <./Supplementary_appendix_files/figure-latex/unnamed-chunk-2-1.png>]
+
+[7]
+
+[8]
+<Supplementary_appendix_files/figure-latex/ESSplots-1.png, id=108, 433.62pt x 252.945pt>
+File: Supplementary_appendix_files/figure-latex/ESSplots-1.png Graphic file (type png)
+<use Supplementary_appendix_files/figure-latex/ESSplots-1.png>
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/ESSplots-1.png  used on input line 447.
+(pdftex.def)             Requested size: 433.61894pt x 252.94438pt.
+<Supplementary_appendix_files/figure-latex/ESSplots-2.png, id=109, 433.62pt x 252.945pt>
+File: Supplementary_appendix_files/figure-latex/ESSplots-2.png Graphic file (type png)
+<use Supplementary_appendix_files/figure-latex/ESSplots-2.png>
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/ESSplots-2.png  used on input line 450.
+(pdftex.def)             Requested size: 433.61894pt x 252.94438pt.
+<Supplementary_appendix_files/figure-latex/ESSplots-3.png, id=110, 433.62pt x 252.945pt>
+File: Supplementary_appendix_files/figure-latex/ESSplots-3.png Graphic file (type png)
+<use Supplementary_appendix_files/figure-latex/ESSplots-3.png>
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/ESSplots-3.png  used on input line 453.
+(pdftex.def)             Requested size: 433.61894pt x 252.94438pt.
+
+
+[9 <./Supplementary_appendix_files/figure-latex/ESSplots-1.png>]
+<Supplementary_appendix_files/figure-latex/ESSplots-4.png, id=118, 433.62pt x 252.945pt>
+File: Supplementary_appendix_files/figure-latex/ESSplots-4.png Graphic file (type png)
+<use Supplementary_appendix_files/figure-latex/ESSplots-4.png>
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/ESSplots-4.png  used on input line 456.
+(pdftex.def)             Requested size: 433.61894pt x 252.94438pt.
+<Supplementary_appendix_files/figure-latex/ESSplots-5.png, id=119, 433.62pt x 252.945pt>
+File: Supplementary_appendix_files/figure-latex/ESSplots-5.png Graphic file (type png)
+<use Supplementary_appendix_files/figure-latex/ESSplots-5.png>
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/ESSplots-5.png  used on input line 459.
+(pdftex.def)             Requested size: 433.61894pt x 252.94438pt.
+
+
+[10 <./Supplementary_appendix_files/figure-latex/ESSplots-2.png> <./Supplementary_appendix_files/figure-latex/ESSplots-3.png>]
+<Supplementary_appendix_files/figure-latex/ESSplots-6.png, id=128, 433.62pt x 252.945pt>
+File: Supplementary_appendix_files/figure-latex/ESSplots-6.png Graphic file (type png)
+<use Supplementary_appendix_files/figure-latex/ESSplots-6.png>
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/ESSplots-6.png  used on input line 462.
+(pdftex.def)             Requested size: 433.61894pt x 252.94438pt.
+
+
+[11 <./Supplementary_appendix_files/figure-latex/ESSplots-4.png> <./Supplementary_appendix_files/figure-latex/ESSplots-5.png>]
+<Supplementary_appendix_files/figure-latex/distplots-1.png, id=137, 505.89pt x 289.08pt>
+File: Supplementary_appendix_files/figure-latex/distplots-1.png Graphic file (type png)
+<use Supplementary_appendix_files/figure-latex/distplots-1.png>
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/distplots-1.png  used on input line 470.
+(pdftex.def)             Requested size: 505.88875pt x 289.07928pt.
+
+Overfull \hbox (5.40475pt too wide) in paragraph at lines 470--470
+[][] 
+ []
+
+
+
+[12 <./Supplementary_appendix_files/figure-latex/ESSplots-6.png>]
+<Supplementary_appendix_files/figure-latex/distplots-2.png, id=144, 505.89pt x 289.08pt>
+File: Supplementary_appendix_files/figure-latex/distplots-2.png Graphic file (type png)
+<use Supplementary_appendix_files/figure-latex/distplots-2.png>
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/distplots-2.png  used on input line 474.
+(pdftex.def)             Requested size: 505.88875pt x 289.07928pt.
+
+Overfull \hbox (5.40475pt too wide) in paragraph at lines 474--474
+[][] 
+ []
+
+<Supplementary_appendix_files/figure-latex/distplots-3.png, id=145, 505.89pt x 289.08pt>
+File: Supplementary_appendix_files/figure-latex/distplots-3.png Graphic file (type png)
+<use Supplementary_appendix_files/figure-latex/distplots-3.png>
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/distplots-3.png  used on input line 478.
+(pdftex.def)             Requested size: 505.88875pt x 289.07928pt.
 
 Overfull \hbox (5.40475pt too wide) in paragraph at lines 478--478
 [][] 
  []
 
-<Supplementary_appendix_files/figure-latex/survplots-6.png, id=129, 505.89pt x 252.945pt>
-File: Supplementary_appendix_files/figure-latex/survplots-6.png Graphic file (type png)
-<use Supplementary_appendix_files/figure-latex/survplots-6.png>
-Package pdftex.def Info: Supplementary_appendix_files/figure-latex/survplots-6.png  used on input line 481.
-(pdftex.def)             Requested size: 505.88875pt x 252.94438pt.
 
-Overfull \hbox (5.40475pt too wide) in paragraph at lines 481--481
+
+[13 <./Supplementary_appendix_files/figure-latex/distplots-1.png> <./Supplementary_appendix_files/figure-latex/distplots-2.png (PNG copy)>]
+<Supplementary_appendix_files/figure-latex/distplots-4.png, id=154, 505.89pt x 289.08pt>
+File: Supplementary_appendix_files/figure-latex/distplots-4.png Graphic file (type png)
+<use Supplementary_appendix_files/figure-latex/distplots-4.png>
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/distplots-4.png  used on input line 482.
+(pdftex.def)             Requested size: 505.88875pt x 289.07928pt.
+
+Overfull \hbox (5.40475pt too wide) in paragraph at lines 482--482
+[][] 
+ []
+
+<Supplementary_appendix_files/figure-latex/distplots-5.png, id=155, 505.89pt x 289.08pt>
+File: Supplementary_appendix_files/figure-latex/distplots-5.png Graphic file (type png)
+<use Supplementary_appendix_files/figure-latex/distplots-5.png>
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/distplots-5.png  used on input line 486.
+(pdftex.def)             Requested size: 505.88875pt x 289.07928pt.
+
+Overfull \hbox (5.40475pt too wide) in paragraph at lines 486--486
 [][] 
  []
 
 
 
-[12 <./Supplementary_appendix_files/figure-latex/survplots-3.png> <./Supplementary_appendix_files/figure-latex/survplots-4.png>]
+[14 <./Supplementary_appendix_files/figure-latex/distplots-3.png (PNG copy)> <./Supplementary_appendix_files/figure-latex/distplots-4.png (PNG copy)>]
+<Supplementary_appendix_files/figure-latex/distplots-6.png, id=162, 505.89pt x 289.08pt>
+File: Supplementary_appendix_files/figure-latex/distplots-6.png Graphic file (type png)
+<use Supplementary_appendix_files/figure-latex/distplots-6.png>
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/distplots-6.png  used on input line 490.
+(pdftex.def)             Requested size: 505.88875pt x 289.07928pt.
 
-[13 <./Supplementary_appendix_files/figure-latex/survplots-5.png> <./Supplementary_appendix_files/figure-latex/survplots-6.png>]
-<Supplementary_appendix_files/figure-latex/expertsurvIS-1.png, id=151, 505.89pt x 289.08pt>
+Overfull \hbox (5.40475pt too wide) in paragraph at lines 490--490
+[][] 
+ []
+
+
+
+[15 <./Supplementary_appendix_files/figure-latex/distplots-5.png (PNG copy)> <./Supplementary_appendix_files/figure-latex/distplots-6.png (PNG copy)>]
+<Supplementary_appendix_files/figure-latex/expertsurvIS-1.png, id=174, 505.89pt x 289.08pt>
 File: Supplementary_appendix_files/figure-latex/expertsurvIS-1.png Graphic file (type png)
 <use Supplementary_appendix_files/figure-latex/expertsurvIS-1.png>
-Package pdftex.def Info: Supplementary_appendix_files/figure-latex/expertsurvIS-1.png  used on input line 518.
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/expertsurvIS-1.png  used on input line 527.
 (pdftex.def)             Requested size: 505.88875pt x 289.07928pt.
 
-Overfull \hbox (5.40475pt too wide) in paragraph at lines 518--518
+Overfull \hbox (5.40475pt too wide) in paragraph at lines 527--527
 [][] 
  []
 
 
 
-[14]
-<Supplementary_appendix_files/figure-latex/expertsurvIS-2.png, id=160, 505.89pt x 289.08pt>
+[16]
+<Supplementary_appendix_files/figure-latex/expertsurvIS-2.png, id=183, 505.89pt x 289.08pt>
 File: Supplementary_appendix_files/figure-latex/expertsurvIS-2.png Graphic file (type png)
 <use Supplementary_appendix_files/figure-latex/expertsurvIS-2.png>
-Package pdftex.def Info: Supplementary_appendix_files/figure-latex/expertsurvIS-2.png  used on input line 522.
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/expertsurvIS-2.png  used on input line 531.
 (pdftex.def)             Requested size: 505.88875pt x 289.07928pt.
 
-Overfull \hbox (5.40475pt too wide) in paragraph at lines 522--522
+Overfull \hbox (5.40475pt too wide) in paragraph at lines 531--531
 [][] 
  []
 
-<Supplementary_appendix_files/figure-latex/expertsurvIS-3.png, id=161, 505.89pt x 289.08pt>
+<Supplementary_appendix_files/figure-latex/expertsurvIS-3.png, id=184, 505.89pt x 289.08pt>
 File: Supplementary_appendix_files/figure-latex/expertsurvIS-3.png Graphic file (type png)
 <use Supplementary_appendix_files/figure-latex/expertsurvIS-3.png>
-Package pdftex.def Info: Supplementary_appendix_files/figure-latex/expertsurvIS-3.png  used on input line 526.
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/expertsurvIS-3.png  used on input line 535.
 (pdftex.def)             Requested size: 505.88875pt x 289.07928pt.
 
-Overfull \hbox (5.40475pt too wide) in paragraph at lines 526--526
+Overfull \hbox (5.40475pt too wide) in paragraph at lines 535--535
 [][] 
  []
 
 
 
-[15 <./Supplementary_appendix_files/figure-latex/expertsurvIS-1.png> <./Supplementary_appendix_files/figure-latex/expertsurvIS-2.png>]
-<Supplementary_appendix_files/figure-latex/expertsurvIS-4.png, id=170, 505.89pt x 289.08pt>
+[17 <./Supplementary_appendix_files/figure-latex/expertsurvIS-1.png> <./Supplementary_appendix_files/figure-latex/expertsurvIS-2.png>]
+<Supplementary_appendix_files/figure-latex/expertsurvIS-4.png, id=192, 505.89pt x 289.08pt>
 File: Supplementary_appendix_files/figure-latex/expertsurvIS-4.png Graphic file (type png)
 <use Supplementary_appendix_files/figure-latex/expertsurvIS-4.png>
-Package pdftex.def Info: Supplementary_appendix_files/figure-latex/expertsurvIS-4.png  used on input line 530.
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/expertsurvIS-4.png  used on input line 539.
 (pdftex.def)             Requested size: 505.88875pt x 289.07928pt.
 
-Overfull \hbox (5.40475pt too wide) in paragraph at lines 530--530
+Overfull \hbox (5.40475pt too wide) in paragraph at lines 539--539
 [][] 
  []
 
-<Supplementary_appendix_files/figure-latex/expertsurvIS-5.png, id=171, 505.89pt x 289.08pt>
+<Supplementary_appendix_files/figure-latex/expertsurvIS-5.png, id=193, 505.89pt x 289.08pt>
 File: Supplementary_appendix_files/figure-latex/expertsurvIS-5.png Graphic file (type png)
 <use Supplementary_appendix_files/figure-latex/expertsurvIS-5.png>
-Package pdftex.def Info: Supplementary_appendix_files/figure-latex/expertsurvIS-5.png  used on input line 534.
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/expertsurvIS-5.png  used on input line 543.
 (pdftex.def)             Requested size: 505.88875pt x 289.07928pt.
 
-Overfull \hbox (5.40475pt too wide) in paragraph at lines 534--534
+Overfull \hbox (5.40475pt too wide) in paragraph at lines 543--543
 [][] 
  []
 
 
 
-[16 <./Supplementary_appendix_files/figure-latex/expertsurvIS-3.png> <./Supplementary_appendix_files/figure-latex/expertsurvIS-4.png>]
-<Supplementary_appendix_files/figure-latex/plotparams-1.png, id=182, 505.89pt x 289.08pt>
+[18 <./Supplementary_appendix_files/figure-latex/expertsurvIS-3.png> <./Supplementary_appendix_files/figure-latex/expertsurvIS-4.png>]
+<Supplementary_appendix_files/figure-latex/plotparams-1.png, id=204, 505.89pt x 289.08pt>
 File: Supplementary_appendix_files/figure-latex/plotparams-1.png Graphic file (type png)
 <use Supplementary_appendix_files/figure-latex/plotparams-1.png>
-Package pdftex.def Info: Supplementary_appendix_files/figure-latex/plotparams-1.png  used on input line 542.
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/plotparams-1.png  used on input line 551.
 (pdftex.def)             Requested size: 505.88875pt x 289.07928pt.
 
-Overfull \hbox (5.40475pt too wide) in paragraph at lines 542--542
+Overfull \hbox (5.40475pt too wide) in paragraph at lines 551--551
 [][] 
  []
 
 
 
-[17 <./Supplementary_appendix_files/figure-latex/expertsurvIS-5.png>]
-<Supplementary_appendix_files/figure-latex/plotparams-2.png, id=191, 505.89pt x 289.08pt>
+[19 <./Supplementary_appendix_files/figure-latex/expertsurvIS-5.png>]
+<Supplementary_appendix_files/figure-latex/plotparams-2.png, id=214, 505.89pt x 289.08pt>
 File: Supplementary_appendix_files/figure-latex/plotparams-2.png Graphic file (type png)
 <use Supplementary_appendix_files/figure-latex/plotparams-2.png>
-Package pdftex.def Info: Supplementary_appendix_files/figure-latex/plotparams-2.png  used on input line 546.
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/plotparams-2.png  used on input line 555.
 (pdftex.def)             Requested size: 505.88875pt x 289.07928pt.
 
-Overfull \hbox (5.40475pt too wide) in paragraph at lines 546--546
+Overfull \hbox (5.40475pt too wide) in paragraph at lines 555--555
 [][] 
  []
 
-<Supplementary_appendix_files/figure-latex/plotparams-3.png, id=192, 505.89pt x 289.08pt>
+<Supplementary_appendix_files/figure-latex/plotparams-3.png, id=215, 505.89pt x 289.08pt>
 File: Supplementary_appendix_files/figure-latex/plotparams-3.png Graphic file (type png)
 <use Supplementary_appendix_files/figure-latex/plotparams-3.png>
-Package pdftex.def Info: Supplementary_appendix_files/figure-latex/plotparams-3.png  used on input line 550.
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/plotparams-3.png  used on input line 559.
 (pdftex.def)             Requested size: 505.88875pt x 289.07928pt.
 
-Overfull \hbox (5.40475pt too wide) in paragraph at lines 550--550
+Overfull \hbox (5.40475pt too wide) in paragraph at lines 559--559
 [][] 
  []
 
 
 
-[18 <./Supplementary_appendix_files/figure-latex/plotparams-1.png> <./Supplementary_appendix_files/figure-latex/plotparams-2.png (PNG copy)>]
-<Supplementary_appendix_files/figure-latex/plotparams-4.png, id=199, 505.89pt x 289.08pt>
+[20 <./Supplementary_appendix_files/figure-latex/plotparams-1.png> <./Supplementary_appendix_files/figure-latex/plotparams-2.png (PNG copy)>]
+<Supplementary_appendix_files/figure-latex/plotparams-4.png, id=222, 505.89pt x 289.08pt>
 File: Supplementary_appendix_files/figure-latex/plotparams-4.png Graphic file (type png)
 <use Supplementary_appendix_files/figure-latex/plotparams-4.png>
-Package pdftex.def Info: Supplementary_appendix_files/figure-latex/plotparams-4.png  used on input line 554.
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/plotparams-4.png  used on input line 563.
 (pdftex.def)             Requested size: 505.88875pt x 289.07928pt.
 
-Overfull \hbox (5.40475pt too wide) in paragraph at lines 554--554
+Overfull \hbox (5.40475pt too wide) in paragraph at lines 563--563
 [][] 
  []
 
-<Supplementary_appendix_files/figure-latex/plotparams-5.png, id=200, 505.89pt x 289.08pt>
+<Supplementary_appendix_files/figure-latex/plotparams-5.png, id=223, 505.89pt x 289.08pt>
 File: Supplementary_appendix_files/figure-latex/plotparams-5.png Graphic file (type png)
 <use Supplementary_appendix_files/figure-latex/plotparams-5.png>
-Package pdftex.def Info: Supplementary_appendix_files/figure-latex/plotparams-5.png  used on input line 558.
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/plotparams-5.png  used on input line 567.
 (pdftex.def)             Requested size: 505.88875pt x 289.07928pt.
 
-Overfull \hbox (5.40475pt too wide) in paragraph at lines 558--558
+Overfull \hbox (5.40475pt too wide) in paragraph at lines 567--567
 [][] 
  []
 
 
 
-[19 <./Supplementary_appendix_files/figure-latex/plotparams-3.png (PNG copy)> <./Supplementary_appendix_files/figure-latex/plotparams-4.png (PNG copy)>]
-<Supplementary_appendix_files/figure-latex/AUC-1.png, id=209, 469.755pt x 325.215pt>
+[21 <./Supplementary_appendix_files/figure-latex/plotparams-3.png (PNG copy)> <./Supplementary_appendix_files/figure-latex/plotparams-4.png (PNG copy)>]
+<Supplementary_appendix_files/figure-latex/AUC-1.png, id=231, 469.755pt x 325.215pt>
 File: Supplementary_appendix_files/figure-latex/AUC-1.png Graphic file (type png)
 <use Supplementary_appendix_files/figure-latex/AUC-1.png>
-Package pdftex.def Info: Supplementary_appendix_files/figure-latex/AUC-1.png  used on input line 587.
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/AUC-1.png  used on input line 592.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 
-[20 <./Supplementary_appendix_files/figure-latex/plotparams-5.png (PNG copy)>]
-<Supplementary_appendix_files/figure-latex/ststar-1.png, id=218, 469.755pt x 325.215pt>
+[22 <./Supplementary_appendix_files/figure-latex/plotparams-5.png (PNG copy)>]
+<Supplementary_appendix_files/figure-latex/ststar-1.png, id=240, 469.755pt x 325.215pt>
 File: Supplementary_appendix_files/figure-latex/ststar-1.png Graphic file (type png)
 <use Supplementary_appendix_files/figure-latex/ststar-1.png>
-Package pdftex.def Info: Supplementary_appendix_files/figure-latex/ststar-1.png  used on input line 626.
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/ststar-1.png  used on input line 623.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 
-[21 <./Supplementary_appendix_files/figure-latex/AUC-1.png>]
+[23 <./Supplementary_appendix_files/figure-latex/AUC-1.png>]
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 630.
+(c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 635.
+(c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
+File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+Overfull \hbox (6.59973pt too wide) in paragraph at lines 652--667
+ [][] 
+ []
 
-[22 <./Supplementary_appendix_files/figure-latex/ststar-1.png>] (./Supplementary_appendix.aux)
+
+
+[24{c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc} <./Supplementary_appendix_files/figure-latex/ststar-1.png>]
+<Supplementary_appendix_files/figure-latex/unnamed-chunk-6-1.png, id=255, 505.89pt x 650.43pt>
+File: Supplementary_appendix_files/figure-latex/unnamed-chunk-6-1.png Graphic file (type png)
+<use Supplementary_appendix_files/figure-latex/unnamed-chunk-6-1.png>
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/unnamed-chunk-6-1.png  used on input line 674.
+(pdftex.def)             Requested size: 505.88875pt x 650.4284pt.
+
+Overfull \hbox (5.40475pt too wide) in paragraph at lines 674--674
+[][] 
+ []
+
+
+
+[25]
+
+[26 <./Supplementary_appendix_files/figure-latex/unnamed-chunk-6-1.png>]
+<Supplementary_appendix_files/figure-latex/unnamed-chunk-8-1.png, id=268, 505.89pt x 650.43pt>
+File: Supplementary_appendix_files/figure-latex/unnamed-chunk-8-1.png Graphic file (type png)
+<use Supplementary_appendix_files/figure-latex/unnamed-chunk-8-1.png>
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/unnamed-chunk-8-1.png  used on input line 742.
+(pdftex.def)             Requested size: 505.88875pt x 650.4284pt.
+
+Overfull \hbox (5.40475pt too wide) in paragraph at lines 742--742
+[][] 
+ []
+
+
+
+[27 <./Supplementary_appendix_files/figure-latex/unnamed-chunk-8-1.png>]
+
+[28]
+<Supplementary_appendix_files/figure-latex/unnamed-chunk-10-1.png, id=280, 505.89pt x 650.43pt>
+File: Supplementary_appendix_files/figure-latex/unnamed-chunk-10-1.png Graphic file (type png)
+<use Supplementary_appendix_files/figure-latex/unnamed-chunk-10-1.png>
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/unnamed-chunk-10-1.png  used on input line 810.
+(pdftex.def)             Requested size: 505.88875pt x 650.4284pt.
+
+Overfull \hbox (5.40475pt too wide) in paragraph at lines 810--810
+[][] 
+ []
+
+
+Overfull \hbox (15.71074pt too wide) in paragraph at lines 819--841
+ [][] 
+ []
+
+
+
+[29 <./Supplementary_appendix_files/figure-latex/unnamed-chunk-10-1.png>]
+
+[30]
+<Supplementary_appendix_files/figure-latex/unnamed-chunk-12-1.png, id=292, 469.755pt x 325.215pt>
+File: Supplementary_appendix_files/figure-latex/unnamed-chunk-12-1.png Graphic file (type png)
+<use Supplementary_appendix_files/figure-latex/unnamed-chunk-12-1.png>
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/unnamed-chunk-12-1.png  used on input line 844.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+
+
+[31 <./Supplementary_appendix_files/figure-latex/unnamed-chunk-12-1.png>] (./Supplementary_appendix.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-09-02>
@@ -925,18 +1019,18 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 13299 strings out of 469777
- 222717 string characters out of 5479940
- 642386 words of memory out of 5000000
- 41380 multiletter control sequences out of 15000+600000
- 672979 words of font info for 80 fonts, out of 8000000 for 9000
+ 13488 strings out of 469777
+ 229116 string characters out of 5479940
+ 675644 words of memory out of 5000000
+ 41535 multiletter control sequences out of 15000+600000
+ 673663 words of font info for 82 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 89i,9n,93p,1054b,477s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb>
-Output written on Supplementary_appendix.pdf (22 pages, 1959100 bytes).
+ 89i,11n,93p,1054b,479s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
+Output written on Supplementary_appendix.pdf (31 pages, 2241397 bytes).
 PDF statistics:
- 305 PDF objects out of 1000 (max. 8388607)
- 219 compressed objects within 3 object streams
- 80 named destinations out of 1000 (max. 500000)
- 239 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 401 PDF objects out of 1000 (max. 8388607)
+ 293 compressed objects within 3 object streams
+ 104 named destinations out of 1000 (max. 500000)
+ 304 words of extra memory for PDF output out of 10000 (max. 10000000)
 

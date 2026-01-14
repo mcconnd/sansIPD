@@ -85,7 +85,7 @@ outplot<-ggplot(data=is.compare.df,aes(x=time,y=OS,colour=Distribution))+
 
 plot(outplot)
 
-ggsave("./output/plot_mle_is.png",plot=outplot,width=5, height=6,units="in")
+ggsave("./output/plot_mle_is.png",plot=outplot,width=7, height=7,units="in",dpi=300)
 
 outplot_wide<-ggplot(data=is.compare.df,aes(x=time,y=OS,colour=Distribution))+
   geom_line(lwd=1.2,alpha=0.8)+

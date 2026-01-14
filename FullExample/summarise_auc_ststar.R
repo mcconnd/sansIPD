@@ -36,7 +36,7 @@ library(scales)
 
 s.tstar.print<-surv.tstar.summary %>%
   pivot_wider(names_from = name,values_from = 3:10) %>% 
-  mutate(mean_diff=mean_MLE-mean_IS,
+  mutate(mean_diff=mean_IS-mean_MLE,
          var.ratio=sd_IS^2/sd_MLE^2) %>%
   select(Distribution,
          mean_MLE,lwr.95_MLE,upr.95_MLE,
@@ -49,16 +49,22 @@ s.tstar.print<-surv.tstar.summary %>%
   )%>%
   ungroup()%>%
   inner_join(surv.tstar.det,by=join_by(Distribution)) %>%
-  mutate((across(c(mean_MLE:mean_diff,Det_MLE:Det_IS),~percent(.x,accuracy=0.01))),
+  mutate(
+    Det_diff=Det_IS-Det_MLE,
+    (across(c(mean_MLE:mean_diff,Det_MLE:Det_diff),~percent(.x,accuracy=0.1))),
          var.ratio=format(round(var.ratio,2),nsmall=2),
          across(MSE_MLE:MAE_IS,~format(round(.x,3),nsmall=3)),
-         across(Agreement_MLE:Agreement_IS,~percent(.x,accuracy=1))
+         across(Agreement_MLE:Agreement_IS,~percent(.x,accuracy=0.1))
          ) %>%
   mutate(MLE=paste0(mean_MLE," (",lwr.95_MLE,", ",upr.95_MLE,")"),
          IS=paste0(mean_IS," (",lwr.95_IS,", ",upr.95_IS,")")
   ) %>%
   ungroup() %>%
-  select(Distribution,Det_MLE,Prob_MLE=MLE,Det_IS,Prob_IS=IS,mean_diff,var.ratio,Agreement_MLE,Agreement_IS,MSE_MLE,MSE_IS,MAE_MLE,MAE_IS) 
+  select(Distribution,
+         Det_MLE,Det_IS,Det_diff,
+         Prob_MLE=MLE,Agreement_MLE,Prob_IS=IS,Agreement_IS,
+         mean_diff,var.ratio,
+         MSE_MLE,MSE_IS,MAE_MLE,MAE_IS) 
 
 
 print(s.tstar.print)

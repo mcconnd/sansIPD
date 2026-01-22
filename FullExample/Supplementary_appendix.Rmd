@@ -496,7 +496,7 @@ kbl(surv.tstar.summary2, caption = "Comparison of 5-year OS estimates, obtained 
     booktabs=T) %>%
   kable_styling(latex_options=c("striped","HOLD_position"))
 
-g.ststar2<-ggplot(data=surv.tstar.long2,aes(x=S.tstar,y=Distribution,colour=Output,fill=Output))+ geom_density_ridges(alpha=0.5,scale=1)+scale_fill_manual(values=cbPalette)+scale_colour_manual(values=cbPalette)+labs(x="5-year landmark OS",y="Density")
+g.ststar2<-ggplot(data=surv.tstar.long2,aes(x=S.tstar,y=Distribution,colour=Output,fill=Output))+ geom_density_ridges(alpha=0.5,scale=1)+scale_fill_manual(values=cbPalette)+scale_colour_manual(values=cbPalette)+labs(x="5-year OS probability",y="Density")
 cat('\n\n')
 g.ststar2
 cat('\n\n')
@@ -607,7 +607,7 @@ kbl(prior.sca.print,
 
 ## Results of Scenario analyses:
 
-For all scenarios, we plot posterior mean survival curve estimates, and compare mean lifetime OS and 5-year landmark OS.
+For all scenarios, we plot posterior mean survival curve estimates, and compare mean lifetime OS and 5-year OS probabilities.
 
 ```{r}
 

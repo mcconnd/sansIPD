@@ -24,7 +24,7 @@ plot.auc.ststar<- ggarrange(g.auc,g.ststar2,
 
 print(plot.auc.ststar)
 
-ggsave("./output/plot_auc_s5.png",plot.auc.ststar,width=7,height=7,units="in")
+ggsave("./output/plot_auc_s5.png",plot.auc.ststar,width=7,height=7,units="in",dpi=300)
 
 ### Tables for article
 

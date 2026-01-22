@@ -397,9 +397,9 @@ cat('\n\n')
 }
 ```
 
-## Comparisons of AUC distributions
+## Comparisons of Mean OS
 
-Table \@ref(tab:AUC) and Figure \@ref(fig:AUC) compare probabilistic estimates of area under the curve between the two methods. In general, AUC measures (population) mean survival extrapolated over a lifetime, though in these examples survival is capped at 100 years since some curves plateau.
+Table \@ref(tab:AUC) and Figure \@ref(fig:AUC) compare probabilistic estimates of mean OS between the two methods. In these examples survival is capped at 100 years since some curves plateau.
 
 ```{r AUC,  results='asis', fig.cap="Density plots comparing probabilistic total area under the curve (mean OS) distributions obtained from combining trial data with external information using the importance sampling (IS) method described in the paper, with those obtained from the fully Bayesian method of Cooney and White implemented in the expertsurv package. "}
 
@@ -459,7 +459,7 @@ cat('\n\n')
 g.auc<-ggplot(data=auc.df2,aes(x=AUC,y=Distribution,colour=Method,fill=Method))+
 geom_density_ridges(alpha=0.5,scale=0.95)+
 scale_fill_manual(values=cbPalette[2:3])+                                                      scale_colour_manual(values=cbPalette[2:3])+
-labs(x="AUC (Mean lifetime OS, Months)",y="Density")+
+labs(x="Mean OS, Months",y="Density")+
 xlim(0,360)+
 theme(legend.position = "bottom")
 g.auc
@@ -469,7 +469,7 @@ cat('\n\n')
 
 
 
-## Comparisons of 5-year OS
+## Comparisons of 5-year OS probabilities
 Table \@ref(tab:ststar) and Figure \@ref(fig:ststar) compare probabilistic estimates of 5-year OS obtained from the two methods.
 
 ```{r ststar,  results='asis', fig.cap = "Density plots comparing 5-year OS estimates, obtained from combining trial data with external information using the importance sampling (IS) method described in the paper, with those obtained from the fully Bayesian method of Cooney and White implemented in the expertsurv package."}
@@ -839,7 +839,7 @@ cat('\n\n')
 g.auc<-ggplot(data=filter(sca.longsims2,Variable=="AUC"),aes(y=value,x=Scenario,fill=Scenario))+
   geom_boxplot(outliers=FALSE)+
   facet_wrap(.~Distribution,ncol=2,scales="free_y")+
-  labs(y="AUC (Mean lifetime OS, Months)")+
+  labs(y="Mean OS, Months")+
   theme(legend.position = "none",
         axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
         axis.title.x = element_blank())+

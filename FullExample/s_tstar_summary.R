@@ -76,7 +76,7 @@ g.ststar<-ggplot(data=surv.tstar.long,aes(x=S.tstar,y=Distribution,colour=Output
   geom_density_ridges(alpha=0.5,scale=1)+
   scale_fill_manual(values=cbPalette)+
   scale_colour_manual(values=cbPalette)+
-  labs(x="5-year landmark OS",y="Density")
+  labs(x="5-year OS probability",y="Density")
 
 
 # Individual plot (not used)

@@ -47,7 +47,7 @@ g.auc<-ggplot(data=auc.df,aes(x=AUC,y=Distribution,colour=Method,fill=Method))+
   geom_density_ridges(alpha=0.5,scale=0.95)+
   scale_fill_manual(values=cbPalette[2:3])+
   scale_colour_manual(values=cbPalette[2:3])+
-  labs(x="AUC (Mean lifetime OS, Months)",y="Density")+
+  labs(x="Mean OS, Months",y="Density")+
   xlim(0,360)
 
 ##g.auc

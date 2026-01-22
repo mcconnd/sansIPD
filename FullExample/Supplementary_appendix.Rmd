@@ -28,7 +28,8 @@ knitr::opts_chunk$set(echo = FALSE,
                       tidy.opts=list(width.cutoff=60),
                       fig.pos = "H", 
                       out.extra = "",
-                      latex_options = "HOLD_position"
+                      latex_options = "HOLD_position",
+                      dpi=300
                       )
 
 set.seed(12345)
@@ -788,10 +789,14 @@ sca.ests.all<-bind_rows(sca.ests,.id="id") %>%
   
 
 ggplot(data=sca.ests.all,aes(x=time,y=St,colour=Scenario))+
-  geom_line(lwd=1)+
+  geom_line(lwd=0.75)+
   facet_wrap(.~Distribution,ncol=2)+
   theme(legend.position = "bottom")+
-  ylab("S(t)")
+  ylab("S(t)")+
+  #Plot base case again for visibility
+  geom_line(data=filter(sca.ests.all,Scenario=="Base Case"))+
+  scale_colour_manual(values=palette.colors())
+  
 
 
 ```
@@ -837,7 +842,9 @@ g.auc<-ggplot(data=filter(sca.longsims2,Variable=="AUC"),aes(y=value,x=Scenario,
   labs(y="AUC (Mean lifetime OS, Months)")+
   theme(legend.position = "none",
         axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
-        axis.title.x = element_blank())
+        axis.title.x = element_blank())+
+  scale_fill_manual(values=palette.colors())
+
   
 g.auc
 
@@ -877,7 +884,8 @@ g.s5<-ggplot(data=filter(sca.longsims2,Variable=="STSTAR"),aes(y=value,x=Scenari
   labs(y="5-year survival probabilities")+
   theme(legend.position = "none",
         axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
-        axis.title.x = element_blank())
+        axis.title.x = element_blank())+
+  scale_fill_manual(values=palette.colors())
   
 g.s5
 

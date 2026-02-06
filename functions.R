@@ -286,6 +286,8 @@ is_surv <- function(
   output$post_cov <- post_cov
   output$par_new <- par_new
   
+  output$par_new_nat<-
+  
   output$orig <- list("coefficients"=coeff,
                       "cov"=cov,
                       "dist"=dist)
@@ -531,7 +533,8 @@ trans<-function(dist,sims)
 
 
 
-get_sims<-function(dist,coeff,cov,nsim=5000,tst=tstar,times=tseq2,tmax=max(tseq2))
+get_sims<-function(dist,coeff,cov,nsim=5000,tst=tstar,times=tseq2,tmax=max(tseq2)
+                  )
 {
   out<-list()
   
@@ -548,6 +551,8 @@ get_sims<-function(dist,coeff,cov,nsim=5000,tst=tstar,times=tseq2,tmax=max(tseq2
   # Simulated parameter draws on the natural scale
   out[["sims.nat"]]<-inv_trans(dist=dist,sims=out[["sims.mvn"]])
   
+  
+  
   # Simulated survival estimates at time tstar
   # This doesn't need cases but I've arranged it this way to avoid breaking anything for the length 1 case
   if (length(tst==1))
@@ -561,6 +566,8 @@ get_sims<-function(dist,coeff,cov,nsim=5000,tst=tstar,times=tseq2,tmax=max(tseq2
   # Simulated survival estimates across all timepoints
   
   # Compute matrix of survival time estimates
+  
+  
   S_mat <- matrix(0, nrow = length(times), ncol = nsim)
   S_mat<-t(sapply(times,
                   function(x) {s_fun(t=x,dist=dist,trans_pars=out[["sims.nat"]])}
@@ -572,11 +579,13 @@ get_sims<-function(dist,coeff,cov,nsim=5000,tst=tstar,times=tseq2,tmax=max(tseq2
   
   #out[["survtimes"]]<-bind_cols(data.frame("time"=times),data.frame(S_mat))
   
-  # Quantiles of survival esimtates over time
+ 
+    
+
+    S_upper <- apply(S_mat, 1, quantile, probs = 0.975)
+    S_lower <- apply(S_mat, 1, quantile, probs = 0.025)
+    S_median <- apply(S_mat, 1, median)
   
-  S_upper <- apply(S_mat, 1, quantile, probs = 0.975)
-  S_lower <- apply(S_mat, 1, quantile, probs = 0.025)
-  S_median <- apply(S_mat, 1, median)
   
   S_mat_summary <- cbind(S_lower,S_median,S_upper)
   
@@ -591,3 +600,60 @@ get_sims<-function(dist,coeff,cov,nsim=5000,tst=tstar,times=tseq2,tmax=max(tseq2
   return(out)
 }
 
+
+## compare_weighted_sims()
+## This function compares probabilistic survival curves between the weighted samples obtained from the importance sampling algorithm, and the final multivariate normal approximation
+##  Returns dataframe with pointwise (over time) posterior median and 95% CrI using both methods
+
+compare_weighted_sims<-function(sims_raw, #  Samples to be weighted; use the natural scale 
+                                sims_wts, # Sample weights
+                                sims_mvn, # Samples obtained from the MVN approximation
+                                times = tseq2,
+                                dist){
+  
+  ## Matrix of survival times
+  S_mat <- matrix(0, nrow = length(times), ncol = length(sims_wts))
+  S_mat2<-S_mat
+  
+  # Survival times from weighted probabilistic samples
+  S_mat<-t(sapply(times,
+                  function(x) {s_fun(t=x,dist=dist,trans_pars=sims_raw)}
+  ))
+  
+  # Survival times from MVN approximation
+  if(dist=="exponential")
+  {
+    colnames(sims_mvn)<-"rate"
+  }  
+  
+  mvn_sims_nat<-inv_trans(dist=dist,sims=sims_mvn)
+  
+  S_mat2<-t(sapply(times,
+                   function(x) {s_fun(t=x,dist=dist,trans_pars=mvn_sims_nat)}
+  ))
+  
+  # Quantiles of survival esimtates over time
+  # Using weighted probabilistic analysis
+  
+  S_sum1<-data.frame(t(apply(S_mat, 1, wtd.quantile, weights=sims_wts, probs = c(0.025,0.5,0.975))))
+  names(S_sum1)<-c("S_lower","S_median","S_upper")
+  S_sum1$Method<-"Weighted Samples"
+  S_sum1$time<-times
+  
+  # Quantiles using MVN approx
+  S_sum2<-data.frame(t(apply(S_mat2, 1, quantile, probs = c(0.025,0.5,0.975))))
+  names(S_sum2)<-c("S_lower","S_median","S_upper")
+  S_sum2$Method<-"MVN Approximation"
+  S_sum2$time<-times
+  
+  
+  
+  
+  # Summary data frame
+  S_summary<-bind_rows(S_sum1,S_sum2)
+  
+  S_summary$Distribution<-distributions[dist]
+  
+  return(S_summary)
+  
+}

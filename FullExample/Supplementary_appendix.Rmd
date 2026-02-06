@@ -368,7 +368,7 @@ cat('\n\n')
 
 ## Comparisons of parameter distributions
 
-Figures \@ref(fig:plotparams-1) to \@ref(fig:plotparams-5) compare survival curve parameter distributions obtained from the importance sampling method described in the paper, with those obtained from the fully Bayesian approach of Cooney & Whilte implemented in the expertsurv package.  Again, some differences are evident between the two methods for the log-normal model (Figure \@ref(fig:plotparams-4)).
+Figures \@ref(fig:plotparams-1) to \@ref(fig:plotparams-5) compare survival curve parameter distributions obtained from the importance sampling method described in the paper, with those obtained from the fully Bayesian approach of Cooney & White implemented in the expertsurv package.  Again, some differences are evident between the two methods for the log-normal model (Figure \@ref(fig:plotparams-4)).
 
 ```{r plotparams,message=F, warning=F, fig.height=4,fig.width=7,fig.cap=captions5, dpi=300}
 
@@ -899,7 +899,6 @@ cat('\n\n')
 ```{r}
 
 ### Compute 5-year OS and mean OS using weighted samples from IS method
-
 wt.summary<-data.frame()
 
 for(dist in dists)
@@ -909,7 +908,7 @@ for(dist in dists)
   raw.samples.mvn<-is.models[[dist]]$raw_samples_mvn
   sample.weights<-is.models[[dist]]$sample_weights
   
-  # Predict survival
+    
   # From raw samples
   st.raw<- data.frame("S.tstar"=s_fun(t=tstar,dist=dist,trans_pars = raw.samples),
                       "S.mean"=get_auc(params=raw.samples.mvn,dist=dist,lwr=0,upr = t.max),
@@ -961,7 +960,37 @@ wt.summary.long%>%
                      "Weighted Samples"=3
                      ))
   
+
+# Figure captions for next code chunk
+captionsmvn<-paste0("Survival curves (posterior median and 95 percent credible intervals) obtained from importance sampling-weighted analysis and from the multivariate normal approximation of the posterior parameter distribution, ",distributions," distribution")
   
+```
+
+
+
+
+```{r,  dpi=300, fig.dim=c(7,9), fig.cap="Survival curves (posterior median and 95 percent credible intervals) obtained from importance sampling-weighted analysis and from the multivariate normal approximation of the posterior parameter distribution"}
+
+
+if(!file.exists("wt.mvn.curves.RDS"))
+{
+  source("comp_wtd_mvn.R")
+} 
+
+wt.curves<-readRDS("wt.mvn.curves.RDS")
+
+wt.curves.df<-bind_rows(wt.curves)
+                                                   
+  g<-ggplot(data=wt.curves.df,aes(x=time,colour=Method,fill=Method))+
+geom_line(aes(y=S_median),lwd=1)+ geom_ribbon(aes(ymin=S_lower,ymax=S_upper),alpha=0.1,linetype="dashed")+
+labs(y="S(t)",x="time (t)")+
+    facet_wrap(.~Distribution,ncol=2)+
+    theme(legend.position = "bottom")
+
+print(g)
+
+
+
 ```
 
 

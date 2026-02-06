@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.9.21)  22 JAN 2026 17:33
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.9.21)  6 FEB 2026 16:22
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1002,14 +1002,32 @@ Overfull \hbox (15.71074pt too wide) in paragraph at lines 819--841
 [29 <./Supplementary_appendix_files/figure-latex/unnamed-chunk-10-1.png>]
 
 [30]
-<Supplementary_appendix_files/figure-latex/unnamed-chunk-12-1.png, id=292, 469.755pt x 325.215pt>
+<Supplementary_appendix_files/figure-latex/unnamed-chunk-12-1.png, id=292, 505.89pt x 650.43pt>
 File: Supplementary_appendix_files/figure-latex/unnamed-chunk-12-1.png Graphic file (type png)
 <use Supplementary_appendix_files/figure-latex/unnamed-chunk-12-1.png>
 Package pdftex.def Info: Supplementary_appendix_files/figure-latex/unnamed-chunk-12-1.png  used on input line 844.
+(pdftex.def)             Requested size: 505.88875pt x 650.4284pt.
+
+Overfull \hbox (5.40475pt too wide) in paragraph at lines 844--844
+[][] 
+ []
+
+
+
+[31]
+Overfull \vbox (5.21385pt too high) has occurred while \output is active []
+
+
+
+[32 <./Supplementary_appendix_files/figure-latex/unnamed-chunk-12-1.png>]
+<Supplementary_appendix_files/figure-latex/unnamed-chunk-13-1.png, id=305, 469.755pt x 325.215pt>
+File: Supplementary_appendix_files/figure-latex/unnamed-chunk-13-1.png Graphic file (type png)
+<use Supplementary_appendix_files/figure-latex/unnamed-chunk-13-1.png>
+Package pdftex.def Info: Supplementary_appendix_files/figure-latex/unnamed-chunk-13-1.png  used on input line 848.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 
-[31 <./Supplementary_appendix_files/figure-latex/unnamed-chunk-12-1.png>] (./Supplementary_appendix.aux)
+[33 <./Supplementary_appendix_files/figure-latex/unnamed-chunk-13-1.png>] (./Supplementary_appendix.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-09-02>
@@ -1019,18 +1037,18 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 13488 strings out of 469777
- 229106 string characters out of 5479940
- 675634 words of memory out of 5000000
- 41535 multiletter control sequences out of 15000+600000
+ 13503 strings out of 469777
+ 229933 string characters out of 5479940
+ 675880 words of memory out of 5000000
+ 41547 multiletter control sequences out of 15000+600000
  673663 words of font info for 82 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  89i,11n,93p,1054b,479s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users/mcconnd1/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on Supplementary_appendix.pdf (31 pages, 2290958 bytes).
+Output written on Supplementary_appendix.pdf (33 pages, 2383796 bytes).
 PDF statistics:
- 401 PDF objects out of 1000 (max. 8388607)
- 293 compressed objects within 3 object streams
- 104 named destinations out of 1000 (max. 500000)
- 304 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 412 PDF objects out of 1000 (max. 8388607)
+ 300 compressed objects within 3 object streams
+ 107 named destinations out of 1000 (max. 500000)
+ 309 words of extra memory for PDF output out of 10000 (max. 10000000)
 

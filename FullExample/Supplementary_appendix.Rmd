@@ -96,8 +96,7 @@ for (dist in dists)
 {
 plots<-readRDS(paste0("./output/plots_",dist))
 print(plots[[3]])
-# +labs(title=NULL))
-#cat('\\newpage')
+
 }
 ```
                                                    
@@ -903,29 +902,23 @@ wt.summary<-data.frame()
 
 for(dist in dists)
 {
-  # Extract parameter sims and weights
-  raw.samples<-is.models[[dist]]$raw_samples_nat
-  raw.samples.mvn<-is.models[[dist]]$raw_samples_mvn
-  sample.weights<-is.models[[dist]]$sample_weights
-  
-    
-  # From raw samples
-  st.raw<- data.frame("S.tstar"=s_fun(t=tstar,dist=dist,trans_pars = raw.samples),
-                      "S.mean"=get_auc(params=raw.samples.mvn,dist=dist,lwr=0,upr = t.max),
+
+  # From posterios samples
+  st.postsamples<- data.frame("S.tstar"=s_fun(t=tstar,dist=dist,trans_pars = is.models[[dist]]$post_samples_nat),
+                      "S.mean"=get_auc(params=is.models[[dist]]$post_samples_mvn,
+                                       dist=dist,lwr=0,upr = t.max),
                       "Method"="Samples",
-                      "Weight"=sample.weights,
                       "Distribution"=dist)
   
   # From summary MVN distribution
   st.mvn<-data.frame("S.tstar"=unname(is.sims[[dist]][["s.tstar"]]),
                      "S.mean"=is.sims[[dist]][["AUC"]],
                      "Method"="MVN",
-                     "Weight"=1,
                      "Distribution"=dist)
  
    # Combine into existing datafram
   
-  wt.summary<-rbind.data.frame(wt.summary,st.raw,st.mvn)
+  wt.summary<-rbind.data.frame(wt.summary,st.postsamples,st.mvn)
   
 }
 
@@ -938,10 +931,10 @@ wt.summary.long<-wt.summary %>%
 
 wt.summary.long%>%
   group_by(Distribution,name,Method) %>%
-  summarise(mean=weighted.mean(value,w=Weight),
-            median=wtd.quantile(value,weights=Weight,probs=0.5),
-            lwr.95=wtd.quantile(value,weights=Weight,probs=0.025),
-            upr.95=wtd.quantile(value,weights=Weight,probs=0.975)
+  summarise(mean=mean(value),
+            median=quantile(value,probs=0.5),
+            lwr.95=quantile(value,probs=0.025),
+            upr.95=quantile(value,probs=0.975)
             ) %>%
   ungroup() %>%
   mutate(across(where(is.numeric),~format(.x,digits=2,nsmall=2)),
@@ -957,7 +950,7 @@ wt.summary.long%>%
   kable_styling(latex_options=c("striped","HOLD_position")) %>%
   add_header_above(c(" "=2,
                      "MVN approximation"=3,
-                     "Weighted Samples"=3
+                     "Posterior Samples"=3
                      ))
   
 
@@ -969,15 +962,26 @@ captionsmvn<-paste0("Survival curves (posterior median and 95 percent credible i
 
 
 
-```{r,  dpi=300, fig.dim=c(7,9), fig.cap="Survival curves (posterior median and 95 percent credible intervals) obtained from importance sampling-weighted analysis and from the multivariate normal approximation of the posterior parameter distribution"}
+```{r,  dpi=300, fig.dim=c(7,9), fig.cap=captionsmvn}
 
 
-if(!file.exists("wt.mvn.curves.RDS"))
+if(!file.exists("./output/wt.mvn.curves.RDS"))
 {
-  source("comp_wtd_mvn.R")
+  
+  wt.mvn.curves<-list()
+
+  for (dist in dists)
+    {
+  
+  wt.mvn.curves[[dist]]<-compare_curves(sims1=is.models[[dist]]$post_samples_nat,
+                                        sims2 = is.models[[dist]]$par_new_nat,
+                                        times=sample(tseq2,1000),
+                                        dist=dist)
+  }
+  saveRDS(wt.mvn.curves,"./output/wt.mvn.curves.RDS")
 } 
 
-wt.curves<-readRDS("wt.mvn.curves.RDS")
+wt.curves<-readRDS("./output/wt.mvn.curves.RDS")
 
 wt.curves.df<-bind_rows(wt.curves)
                                                    
@@ -999,13 +1003,156 @@ print(g)
   
 ## Boxplot
 
-ggplot(data=wt.summary.long,aes(y=value,x=Distribution,fill = Method,weight=Weight))+
+ggplot(data=wt.summary.long,aes(y=value,x=Distribution,fill = Method))+
   geom_boxplot(outliers=FALSE)+
   facet_wrap(.~name,ncol=2,scales="free_y")+
     theme(legend.position = "bottom",
         axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
         axis.title.x = element_blank(),
         axis.title.y=element_blank())
+
+
+#captions for next code chunk
+
+
+distcaps<-paste0("Plots of samples from the posterior distribution obtained from the importance sampling algorithm, ",distributions," distribution")
+
+qqcaps<-paste0("QQ plot to assess normality of the posterior samples obtained from the importance sampling algorithm, ",distributions," distribution")
+
+contourcaps<-paste0("Contour plot of the posterior parameter samples obtained from the importance sampling algorithm, ",distributions[2:5]," distribution")
+
+contourcapsgg<-paste0("Contour plot of the posterior parameter samples obtained from the importance sampling algorithm, Gen. Gamma distribution, parameters ",c("mu and sigma (marginalised over Q)","sigma and Q (marginalised over mu)","mu and Q (marginalised over sigma)"))
+
+#captionsmvn2<-c(rbind(
+#  paste0("Plots of samples from the posterior distribution obtained from the importance sampling algorithm, ",distributions," distribution"),
+#  paste0("QQ plot to assess normality of the posterior samples obtained from the importance sampling algorithm, ",distributions," distribution")
+#))
+
+captionsmvn2<-c(
+  distcaps[1],
+  qqcaps[1],
+  rbind(distcaps[2:5],
+        qqcaps[2:5],
+        contourcaps),
+  distcaps[6],
+  qqcaps[6],
+  contourcapsgg)
+
+
+
+```
+
+
+```{r,dpi=300,fig.cap=captionsmvn2,fig.dim=c(7,4)}
+
+
+library(MVN)
+
+
+
+# Custom density functions to use with ggpairs()
+
+mvn.d<-function(data,mapping){
+                    ggplot(data = data, mapping = mapping)+
+                      geom_density_2d_filled(bins=6)+
+                      geom_density_2d(colour="white",bins=6)
+    
+}
+
+diag.d<-function(data,mapping){
+                    ggplot(data = data, mapping = mapping)+
+                      geom_histogram(aes(y = ..density..),colour="white",fill="grey",bins=30)+
+                      geom_density(colour="red")
+    
+}
+
+
+
+for (dist in dists)
+{
+  
+  param.samples<- is.models[[dist]]$post_samples_mvn
+  param.df<-data.frame(param.samples)
+  
+  
+  
+  print(ggpairs(data=param.df,
+                upper=list(continuous=wrap(mvn.d)
+                           ),
+                diag = list(continuous=wrap(diag.d))
+                ))
+  
+  if(dist=="exponential"){
+    names(param.df)<-"lograte"
+    g<-ggplot(data=param.df,aes(sample=lograte))+
+      stat_qq()+
+      stat_qq_line()+
+      labs(
+           x="Theoretical quantiles",
+           y="Sample quantiles")
+    
+    print(g)
+    
+  }else{
+   g<-multivariate_diagnostic_plot(param.samples,type="qq")
+   
+   print(g+
+     labs(title = NULL,
+          subtitle = NULL)+
+       scale_x_log10()+
+       scale_y_log10()
+
+   )
+   
+   if(dist!="gengamma"){
+     
+     param.df2<-param.df
+     names(param.df2)<-c("x","y")
+     g2<-ggplot(data = param.df2, aes(x=x,y=y))+
+       geom_density_2d_filled(bins=6)+
+       geom_density_2d(colour="white",bins=6)+
+       labs(x=names(param.df)[1],y=names(param.df)[2])+
+       theme(legend.position="none")
+     
+     print(g2)
+       
+   } else{
+      param.df2<-param.df
+      names(param.df2)<-c("x","y","z")
+      
+      g1<-ggplot(data = param.df2, aes(x=x,y=y))+
+       geom_density_2d_filled(bins=6)+
+       geom_density_2d(colour="white",bins=6)+
+       labs(x=names(param.df)[1],y=names(param.df)[2])+
+       theme(legend.position="none")
+      
+      print(g1)
+      
+      g2<-ggplot(data = param.df2, aes(x=y,y=z))+
+       geom_density_2d_filled(bins=6)+
+       geom_density_2d(colour="white",bins=6)+
+       labs(x=names(param.df)[2],y=names(param.df)[3])+
+       theme(legend.position="none")
+      
+      print(g2)
+      
+      g3<-ggplot(data = param.df2, aes(x=x,y=z))+
+       geom_density_2d_filled(bins=6)+
+       geom_density_2d(colour="white",bins=6)+
+       labs(x=names(param.df)[1],y=names(param.df)[3])+
+       theme(legend.position="none")
+      
+      print(g3)
+     
+     
+     
+     
+   }
+   
+   }
+ 
+}
+
 
 
 ```

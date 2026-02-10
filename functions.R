@@ -5,6 +5,7 @@ library(mvtnorm)
 library(Hmisc)
 library(GGally)
 library(tidyverse)
+library(scales)
 
  
 
@@ -285,9 +286,8 @@ is_surv <- function(
   output$post_mean <- post_mean
   output$post_cov <- post_cov
   output$par_new <- par_new
-  
-  output$par_new_nat<-
-  
+  output$par_new_nat<-inv_trans(dist = dist,sims = par_new)
+
   output$orig <- list("coefficients"=coeff,
                       "cov"=cov,
                       "dist"=dist)
@@ -298,9 +298,24 @@ is_surv <- function(
   output$alpha_vec <- alpha_list$alpha_vec
   
   # Edit 20260112 to include raw samples and sample weights
-  output$raw_samples_mvn<-is_out$samples
-  output$raw_samples_nat<-is_out$samples_trans
-  output$sample_weights<-is_out$weights
+  
+  output$raw_samples<-list()
+  
+  output$raw_samples$mvn<-is_out$samples
+  output$raw_samples$nat<-is_out$samples_trans
+  output$raw_samples$weights<-is_out$weights
+  
+  # Weighted resampling from posterior distribution
+  
+  samples.w<-sample(1:length(is_out$weights),
+                    replace=TRUE,
+                    size=5000,
+                    prob = is_out$weights)
+  
+  output$post_samples_mvn<-output$raw_samples$mvn[samples.w,,drop=FALSE]
+  output$post_samples_nat<-output$raw_samples$nat[samples.w,,drop=FALSE]
+  
+  
   
   output
 }
@@ -393,7 +408,7 @@ is_surv_viz_gg <- function(is_surv, times=tseq2,
     newcurve<-get_sims(dist=dist,coeff = is_surv$post_mean, cov = is_surv$post_cov, tst=is_surv$ex_info$tstar, times=times, tmax=max(times))$survsummary
     
     oldcurve["Method"]="Trial data only"
-    newcurve["Method"]="Trial data with\n external information"
+    newcurve["Method"]="Trial data with external information"
     plotcurves<-bind_rows(oldcurve,newcurve)
     
     # Lower and upper limits to plot prior
@@ -414,7 +429,9 @@ is_surv_viz_gg <- function(is_surv, times=tseq2,
                    aes(x=tst,xend=tst,y=lower,yend=upper),
                    colour="black",
                    lwd=1)+
-      labs(y="S(t)",x="time (t)",title=paste0("Survival - ",distributions[dist]))
+      labs(y="S(t)",x="time (t)",title=paste0("Survival - ",distributions[dist]))+
+      scale_fill_discrete(labels=label_wrap(20))+
+      scale_colour_discrete(labels=label_wrap(20))
     
     print(g3)
     
@@ -602,48 +619,43 @@ get_sims<-function(dist,coeff,cov,nsim=5000,tst=tstar,times=tseq2,tmax=max(tseq2
 
 
 ## compare_weighted_sims()
-## This function compares probabilistic survival curves between the weighted samples obtained from the importance sampling algorithm, and the final multivariate normal approximation
+## This function compares probabilistic survival curves between two sets of parameter samples, provided on the natural scale
 ##  Returns dataframe with pointwise (over time) posterior median and 95% CrI using both methods
 
-compare_weighted_sims<-function(sims_raw, #  Samples to be weighted; use the natural scale 
-                                sims_wts, # Sample weights
-                                sims_mvn, # Samples obtained from the MVN approximation
-                                times = tseq2,
-                                dist){
+compare_curves<-function( sims1,
+                          sims2,
+                          name1="Posterior samples",
+                          name2="MVN approximation",
+                          times = tseq2,
+                          dist){
   
   ## Matrix of survival times
-  S_mat <- matrix(0, nrow = length(times), ncol = length(sims_wts))
-  S_mat2<-S_mat
+  S_mat1 <- matrix(0, nrow = length(times), ncol = length(sims1))
+  S_mat2<- matrix(0, nrow = length(times), ncol = length(sims2))
   
   # Survival times from weighted probabilistic samples
-  S_mat<-t(sapply(times,
-                  function(x) {s_fun(t=x,dist=dist,trans_pars=sims_raw)}
+  S_mat1<-t(sapply(times,
+                  function(x) {s_fun(t=x,dist=dist,trans_pars=sims1)}
   ))
   
-  # Survival times from MVN approximation
-  if(dist=="exponential")
-  {
-    colnames(sims_mvn)<-"rate"
-  }  
-  
-  mvn_sims_nat<-inv_trans(dist=dist,sims=sims_mvn)
+ 
   
   S_mat2<-t(sapply(times,
-                   function(x) {s_fun(t=x,dist=dist,trans_pars=mvn_sims_nat)}
+                   function(x) {s_fun(t=x,dist=dist,trans_pars=sims2)}
   ))
   
   # Quantiles of survival esimtates over time
   # Using weighted probabilistic analysis
   
-  S_sum1<-data.frame(t(apply(S_mat, 1, wtd.quantile, weights=sims_wts, probs = c(0.025,0.5,0.975))))
+  S_sum1<-data.frame(t(apply(S_mat1, 1, quantile, probs = c(0.025,0.5,0.975))))
   names(S_sum1)<-c("S_lower","S_median","S_upper")
-  S_sum1$Method<-"Weighted Samples"
+  S_sum1$Method<-name1
   S_sum1$time<-times
   
   # Quantiles using MVN approx
   S_sum2<-data.frame(t(apply(S_mat2, 1, quantile, probs = c(0.025,0.5,0.975))))
   names(S_sum2)<-c("S_lower","S_median","S_upper")
-  S_sum2$Method<-"MVN Approximation"
+  S_sum2$Method<-name2
   S_sum2$time<-times
   
   

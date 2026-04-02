@@ -1,5 +1,4 @@
-Survival Extrapolation Incorporating External Information Using
-Importance Sampling
+The sansIPD method for incorporating external information in survival extrapolation
 ================
 NCPE
 2025-07-01

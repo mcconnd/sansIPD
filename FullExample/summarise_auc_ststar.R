@@ -7,11 +7,12 @@
 g.auc2<-g.auc+theme(legend.position = "none")
 g.ststar2<-g.ststar+
   labs(y=element_blank())+
-  theme(axis.text.y=element_blank(),axis.ticks.y=element_blank())+
+  theme(axis.text.y=element_blank(),axis.ticks.y=element_blank())#+
   #geom_vline(xintercept=s5.obs,linetype="dashed",colour="gray50")+
-  geom_segment(aes(y=Distribution,yend=as.numeric(factor(Distribution))+0.9
-                   ),
-               x=s5.obs,xend=s5.obs,linetype="dashed",colour="gray50")
+  # Updated 20260402 to delete dashed line with survival estimate
+  #geom_segment(aes(y=Distribution,yend=as.numeric(factor(Distribution))+0.9
+  #                 ),
+   #            x=s5.obs,xend=s5.obs,linetype="dashed",colour="gray50")
 
 # Extract legend
 
